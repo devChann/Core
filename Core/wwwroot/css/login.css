@@ -1,0 +1,88 @@
+html,body{
+background-image: url('../assets/background.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: 'Numans', sans-serif;
+overflow:hidden;
+}
+
+.container_left{
+    height:100vh;
+}
+
+.container_login{
+    position: absolute;
+    height: 60vh;
+    left: 10%;
+    top: 20vh;
+    width: 40%;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 3px #414141;
+    border-radius: 10px;
+}
+.container_features{
+    position: absolute;
+    top: 10vh;
+    left: 20%;
+    background-color: #39B7E1;
+    box-shadow: 1px 1px 5px #2b2b2bcc;
+    border-radius: 10px;
+    height: 80vh;
+    width: 70%;
+    padding-left: 30%;
+    padding-top: 12vh;
+
+}
+.login_btn{
+    position: absolute;
+    bottom: 5%;
+    text-align: center;
+    width: 90%;
+    color:white;
+    background: linear-gradient(#04955A,#01AB62);
+}
+.form-group{
+    margin-bottom: 1.5rem;
+}
+.input-group-prepend{
+    background-color: linear-gradient(#04955A,#01AB62);
+}
+.container_features p {
+    color: white;
+    margin-bottom: 1rem;
+    }
+.li_style{
+ width: 1rem;
+ height: 1rem;
+ margin-right: 1rem;
+ border: 'none';
+    }
+.copy_right{
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;  
+}
+.copy_right p{
+    color: black;
+    font-size: small;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.logo{
+    float: right;
+    margin: 3rem;
+}
+.container_right p {
+    color: white;
+    font-size: small;
+    }
+.support{
+    position: absolute;
+    right: 1rem;
+    font-size: small;
+    bottom: 1rem;
+    padding: 2rem;
+} 
+.support a {
+    color: orangered;
+}   

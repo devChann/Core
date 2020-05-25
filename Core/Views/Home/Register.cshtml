@@ -1,0 +1,110 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row">
+    <!--left column -->
+    <div class="col col-sm-6 container_left">
+        <!--Features -->
+
+        <div class="container_features">
+            <div class="container-fluid">
+                <h5 style="text-align: center;color:white;font-weight: bold">Features</h5>
+                <hr>
+                <p>
+                    <span><img src="~/Assets/bullets.svg" class="li_style"></span>
+                    Advanced Data Analysis
+                </p>
+
+                <p>
+                    <span><img src="~/Assets/bullets.svg" class="li_style"></span>
+                    Advanced Data Analysis
+                </p>
+                <p>
+                    <span><img src="~/Assets/bullets.svg" class="li_style"></span>
+                    Advanced Data Analysis
+                </p>
+                <p>
+                    <span><img src="~/Assets/bullets.svg" class="li_style"></span>
+                    Advanced Data Analysis
+                </p>
+                <p>
+                    <span><img src="~/Assets/bullets.svg" class="li_style"></span>
+                    Advanced Data Analysis
+                </p>
+                <div class="copy_right">
+                    <p>&copy; 2020 - County Goverment of Kiambu, All Right Reserved</p>
+                </div>
+            </div>
+
+        </div>
+        <!--login -->
+        <div class="container_login">
+            <div class="container-fluid">
+                <h5 style="text-align: center;margin-top: 1rem">Register</h5>
+                <hr>
+                <form method="post" asp-controller="Home" asp-action="Login">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <label>Email</label>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input asp-for="Email" class="form-control" placeholder="Email">
+                        
+
+                    </div>
+                    <label>Password</label>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input asp-for="Password" class="form-control" placeholder="password">
+                        
+                    </div>
+
+                    <div class="row align-items-center remember">
+                        <p style="text-align: center;width: 100%"><input type="checkbox"><span></span> Remember Me</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Register" id="btn_login" class="btn login_btn"/>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Right Column -->
+    <div class="col col-sm-46 container_right">
+        <div class="logo">
+            <img src="~/Assets/logo.svg" width="100px" height="100px" style="float:right">
+            <br>
+            <h5 style="float: left;color: white;font-weight: bolder">NARIGP | Kiambu County</h5>
+            <br>
+            <p style="float: left;color: white">Data Analyzer</p>
+        </div>
+        <!--content-->
+        <div style="width: 60%; float: left;">
+            <P>
+                The National Agricultural and Rural Inclusive Project (NARIGP)
+                is a Government of Kenya and World Bank/ International Development Association (IDA)
+                funded project. The project covers the following 21 counties: Samburu,
+                Turkana, Makueni, Meru, Kitui, Embu, Kilifi, Kwale, Narok, Kirinyaga,
+                Kiambu, Muranga, Nakuru, Bungoma, Trans Nzoia, Nandi, Vihiga, Kisii,
+                Nyamira, Migori and Homa Bay. NARIGP is supporting these counties to
+                increase agricultural productivity and profitability of rural communities for
+                the identified priority value chains (VC). The project has four component intervention areas:
+                1) Support community driven development 2)
+                Strengthening producer organizations and VC development
+                3) Supporting County Community-Led development and
+                4) Project coordination and management; M&E and ICT. Through NARIGP five counties: Nandi,
+                Kiambu, Nakuru, Meru and Narok have been funded to support the Potato VC
+            </P>
+        </div>
+        <div class="support">
+            <p>Contact the <span><a href="#"> Support Team</a></span></p>
+        </div>
+    </div>
+</div>
