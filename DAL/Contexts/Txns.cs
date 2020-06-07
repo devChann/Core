@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace DAL.Entities
+namespace DAL.Contexts
 {
-    public class Txns
+    public partial class Txns
     {
-        
         public int Id { get; set; }
         public DateTime? UpdateTime { get; set; }
         public string Category { get; set; }
@@ -19,8 +15,9 @@ namespace DAL.Entities
         public double Revenue { get; set; }
         public int AmtofMilkdp { get; set; }
         public string Age { get; set; }
-        [ForeignKey("TransactionId")]
-        [MaxLength(36)]
-        public char TransactionId { get; set; }
+        public string TransactionId { get; set; }
+        public string TransactionsId { get; set; }
+
+        public virtual Transactions Transactions { get; set; }
     }
 }

@@ -4,15 +4,17 @@ using DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200603211711_init_three")]
+    partial class init_three
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -532,11 +534,6 @@ namespace DAL.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("TransactionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(36)")
-                        .HasMaxLength(36);
-
-                    b.Property<string>("TransactionsId")
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<DateTime?>("UpdateTime")
@@ -544,16 +541,16 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionsId");
+                    b.HasIndex("TransactionId");
 
                     b.ToTable("Txns");
                 });
 
             modelBuilder.Entity("DAL.Entities.Txns", b =>
                 {
-                    b.HasOne("DAL.Entities.Transactions", null)
+                    b.HasOne("DAL.Entities.Transactions", "FarmerList")
                         .WithMany("Txns")
-                        .HasForeignKey("TransactionsId");
+                        .HasForeignKey("TransactionId");
                 });
 #pragma warning restore 612, 618
         }

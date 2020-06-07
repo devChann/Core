@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using DAL.Contexts;
+using DAL.Entities;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
 using System;
@@ -9,6 +10,8 @@ namespace DAL.Services
 {
     public class TransactionViewModel
     {
+        
+
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Gender { get; set; }
@@ -16,6 +19,20 @@ namespace DAL.Services
         public string SubCounty { get; set; }
         public string Ward { get; set; }
         public string Vcgroup { get; set; }
-        public List<Txns> Txns { get; set; }
+        public Geometry Geometry { get; set; }
+        public IEnumerable<Contexts.Txns> Results { get; set; }
+
+        public TransactionViewModel(string name, string phone, string gender, string ageGroup, string subCounty, string ward, string vcgroup, Geometry geometry, IEnumerable<Contexts.Txns> results)
+        {
+            Name = name;
+            Phone = phone;
+            Gender = gender;
+            AgeGroup = ageGroup;
+            SubCounty = subCounty;
+            Ward = ward;
+            Vcgroup = vcgroup;
+            Geometry = geometry;
+            Results = results;
+        }
     }
 }

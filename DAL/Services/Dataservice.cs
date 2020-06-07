@@ -13,42 +13,60 @@ using System.Threading.Tasks;
 using System.Collections;
 using Microsoft.AspNetCore.Identity;
 using DAL.Entities;
+using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using DAL.Contexts;
 
 namespace DAL.Services
 {
     public class Dataservice : ICore
     {
-        
+        //private readonly NARIGPCoreContext _context;
+        //public Dataservice(NARIGPCoreContext context)
+        //{
+        //    _context = context;
+        //}
+
         public async Task<string> GetAllFarmersProfiles()
         {
+
             var geojsonndata = new FeatureCollection()
             {
                 CRS = new GeoJSON.Net.CoordinateReferenceSystem.NamedCRS("urn:ogc:def:crs:OGC:1.3:CRS84")
             };
-            using (var context = new DatabaseContext(DatabaseContext.Ops.dbOptions))
+
+            using (var _context = new NARIGPCoreContext())
             {
-                var farmersProfiles = await context.Transactions.Include(sa => sa.Txns).ToListAsync();
-                farmersProfiles.ForEach(sa =>
+                var farmers = _context.Transactions.ToList();
+                var farmActivities = _context.Txns.ToList();
+                var query = farmers.GroupJoin(farmActivities,
+                    fp => fp.Id,
+                    fa => fa.TransactionId,
+                    (fp, results) => new TransactionViewModel(
+                    fp.Name,
+                    fp.Phone,
+                    fp.Gender,
+                    fp.AgeGroup,
+                    fp.SubCounty,
+                    fp.Ward,
+                    fp.Vcgroup,
+                    fp.Geometry,
+                    results)).ToList();
+
+                query.ForEach(sa =>
                 {
-                    var trans = new TransactionViewModel
+                    var transModel = new TransModel()
                     {
                         Name = sa.Name,
                         Phone = sa.Phone,
-                        Gender = sa.Gender,
-                        AgeGroup = sa.AgeGroup,
-                        SubCounty = sa.SubCounty,
-                        Ward = sa.SubCounty,
-                        Vcgroup = sa.Vcgroup,
-                        Txns = sa.Txns
+                        Txns = sa.Results.ToList()
                     };
-
-                    double xcoord = sa.Geometry.Coordinate.X;
-                    double ycoord = sa.Geometry.Coordinate.Y;
-
-                    var point = new Point(new Position(xcoord, ycoord));
-                    var feature = new GeoJSON.Net.Feature.Feature(point, trans);
+                    double X = sa.Geometry.Coordinate.X;
+                    double Y = sa.Geometry.Coordinate.Y;
+                    var point = new Point(new Position(Y, X));
+                    var feature = new GeoJSON.Net.Feature.Feature(point, transModel);
                     geojsonndata.Features.Add(feature);
-
                 });
             }
             var actualJson = JsonConvert.SerializeObject(geojsonndata);
