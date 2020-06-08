@@ -4,34 +4,31 @@
     foo: "bar",
   }).addTo(map);
 
-  //(async () => {
-  //    const data = await fetch("https://localhost:5001/Core/getFarmersProfile")
-  //    console.log(data)
-  //    return data
-  //})();
+  const rowChart = new dc.RowChart("#rowChart");
+  const PieChart = new dc.PieChart("#test2");
+  const dataTable = new dc.DataTable(".dc-data-table");
+  const nasdaqCount = new dc.DataCount(".dc-data-count");
+  const produceChart = new dc.RowChart("#day-of-week-chart");
+  const bubbleChart = new dc.BubbleChart("#dc-bubble-graph");
+
   function loadData(data) {
     console.log("data loaded successfully");
     console.log(data.features);
 
-    //var returnedObject = data.features.map(txn => {
-    //    return txn.properties["Txns"];
-    //})
-    //console.log(returnedObject);
+    const temPData = data.features.map((sa) => {
+      return sa.properties.Txns;
+    });
+    console.log(temPData.flat());
 
-    var ndx = crossfilter(data.features);
+    // create data frames
+    const ndx1 = crossfilter(temPData.flat());
+    const ndx = crossfilter(data.features);
 
-    var topicsDim = ndx.dimension(function (d) {
-      return d.properties["Txns"];
-    }, true);
-    console.log(topicsDim);
-    //var roleDimension = ndx.dimension(d => d.features.map(r => r.properties["Txns"]), true);
-    //console.log(roleDimension);
-
-    // build clusters
-
+    // create map dim;
     const geoDimension = ndx.dimension((d) => {
       d.geometry;
     });
+
     var markers = L.geoJson(
       geoDimension.top(Infinity),
       {
@@ -41,7 +38,7 @@
       {
         pointToLayer: (feature, latlng) => {
           return L.circleMarker(latlng, {
-            radius: 4,
+            radius: 8,
             fillColor: "steelblue",
             weight: 1,
             opacity: 1,
@@ -57,6 +54,44 @@
     map.addLayer(markercluster);
     markercluster.addLayer(markers);
     // map.fitBound(markers.getBound());
+
+    var catDim = ndx1.dimension((d) => d.Id);
+    const catDimGroup = catDim.group();
+
+    rowChart
+      .renderLabel(true)
+      .height(200)
+      .width(250)
+      .dimension(catDim)
+      .group(catDimGroup)
+      .cap(3)
+      .ordering(function (d) {
+        return -d.value;
+      })
+      .xAxis()
+      .ticks(3);
+
+    dataTable
+      .dimension(catDim)
+      .group(() => {
+        return "";
+      })
+
+      .columns([
+        "Id",
+        "Category",
+        "Produce",
+        "Breed",
+        "BreedGender",
+        "Quantity",
+        "Age",
+      ])
+      .sortBy(function (d) {
+        return d.id;
+      })
+      .on("renderlet", function (table) {
+        table.selectAll(".dc-table-group").classed("info", true);
+      });
   }
   function defineFeature(feature, latlng) {
     var catogoryVal = feature.properties.Txns["Category"];
