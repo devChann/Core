@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="right-panel" class="right-panel">
+      <div class="breadcrumbs">
+        <div class="col-sm-4">
+          <div class="page-header float-left" style="padding-top:15px;">
+            <div class="page-title">
+             NARIGP - One Million Farmer Platform
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="page-header float-right">
+            <div class="page-title">
+              <ol class="breadcrumb text-right">
+                <li class="active">Data Analyzer</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="col-xl-6">
+          <div class="card-body" style="height: 79vh !important ;">
+            <div id="map"></div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="dc-data-count"></div>
+          <button onclick="changeChart()" class="button" id="buttonUpdateChart">
+            toggle Chart
+          </button>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <h6>Revenue Per Farm Produce</h6>
+          <div id="revRowChart"></div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <h6>Farm Products</h6>
+          <div id="revRowChart"></div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <h6>Farm Produce</h6>
+          <div id="rowchart"></div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <h6>Main Agri Activities</h6>
+          <div
+            id="farmactivities"
+            style="padding-top: 20px; padding-left: 50px;"
+          ></div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <h6>farmactivities</h6>
+          <div
+            id="farmactivities"
+            style="padding-top: 20px; padding-left: 50px;"
+          ></div>
+        </div>
+      </div>
+    </div>
