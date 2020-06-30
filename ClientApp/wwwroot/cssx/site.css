@@ -1,9 +1,4 @@
-﻿body {
-  font-family: Calibri, "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif, "Gill Sans", "Gill Sans MT", Calibri,
-    "Trebuchet MS", sans-serif;
-}
-.h5 {
+﻿.h5 {
   text-align: center;
 }
 .map {
@@ -22,13 +17,31 @@
   height: fit-content;
 }
 
-#main {
-  /* margin: 5px; */
-  width: 100% !important;
-}
+
 .nav {
   padding-bottom: 5px;
 }
 .card {
   margin: 1rem !important;
+}
+.card-body {
+    height: 30vh;
+    padding: 0.4rem !important;
+}
+
+#main {
+    margin: 0.5rem;
+    width: 100%;
+}
+
+h6 {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+hr {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    box-shadow: 0.5rem;
 }
