@@ -25,6 +25,7 @@ namespace ClientApp.Controllers
         {
             return View();
         }
+        [Authorize]
         public IActionResult Map()
         {
             return View();

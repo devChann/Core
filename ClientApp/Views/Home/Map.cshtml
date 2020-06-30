@@ -3,7 +3,7 @@
     Layout = "/Views/Shared/_Layouttest.cshtml";
 }
 
-<div id="main" class="row">
+@*<div id="main" class="row">
     <div class="col-6">
         <div class="row">
             <div class="col-7">
@@ -124,5 +124,106 @@
         </div>
     </div>
 
-</div>
+</div>*@
 
+    <div id="main" class="row">
+        <div class="col-5">
+            <div class="row">
+                <div class="col-7">
+                    <div class="card" style="width: 22.5rem;">
+                        <h6>Data Summary</h6>
+                        <hr>
+                        <div class="card-body">
+
+                            <div class="table table-hover dc-data-table dc-chart" style="overflow:auto">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card" style="width: 16rem;">
+                        <h6>Main Agri Activities</h6>
+                        <hr>
+                        <div class="card-body">
+
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 0.5rem;">
+                <div class="col-7">
+                    <div class="row" style=" margin-left: 0.1rem">
+                        <div class="card" style="width: 23rem; height: 23vh;">
+                            <h6>Q2</h6>
+                            <hr>
+                            <div class="card-body">
+
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 0.5rem; margin-left: 0.1rem;">
+                        <div class="card" style="width: 23rem;height: 27vh;">
+                            <h6>Q2</h6>
+                            <hr>
+                            <div class="card-body">
+
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card" style="width: 16rem;height: 51.05vh;">
+                        <h6>Main Agri Activities</h6>
+                        <hr>
+                        <div class="card-body">
+
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="card" style="width: 14.5rem;height: 87vh;">
+                <h6>Farm Products</h6>
+                <hr>
+                <div class="card-body">
+                    <div class="rowChart">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="row">
+                <div class="card" style="width: 36.5rem;height: 70vh">
+                    <h6>Map View</h6>
+                    <hr>
+                    <div class="card-body">
+
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 0.5rem;">
+                <div class="card" style="width: 15rem;height: 16vh">
+                    <div class="card-body">
+                        <h6>Total Farmers</h6>
+                        <hr>
+                        <div class='dc-data-count'>
+                            <span class='filter-count'></span>
+                            selected out of <span class='total-count'></span> records.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
