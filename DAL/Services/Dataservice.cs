@@ -73,6 +73,7 @@ namespace DAL.Services
                     fp => fp.Id,
                     fa => fa.TransactionId,
                     (fp, results) => new TransactionViewModel(
+                    fp.Id ,   
                     fp.Name,
                     fp.Phone,
                     fp.Gender,
@@ -87,8 +88,10 @@ namespace DAL.Services
                 {
                     var transModel = new TransModel()
                     {
+                        Id = sa.Id,
                         Name = sa.Name,
                         Phone = sa.Phone,
+                        
                         Txns = sa.Results.ToList()
                     };
                     double X = sa.Geometry.Coordinate.X;

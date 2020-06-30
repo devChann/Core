@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Data Analytics</title>
+
+    <meta itemprop="name" content="DC.js + Leaflet" />
+    <meta itemprop="description" content="DC.js + Leaflet chart" />
+
+    <meta charset="UTF-8">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="~/cssx/leaflet.css" rel="stylesheet" />
+    <link type="text/css" href="~/cssx/MarkerCluster.Default.css" rel="stylesheet" />
+    <link type="text/css" href="~/cssx/MarkerCluster.css" rel="stylesheet" />
+    <link type="text/css" href="~/cssx/dc.css" rel="stylesheet" />
+    <link type="text/css" href="~/cssx/leaflet-legend.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link href="~/cssx/site.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">One Million Farmer Platform</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                   
+                </ul>
+                <span class="navbar-text">
+                    Data Analyzer
+                </span>
+            </div>
+        </nav>
+    </header>
+   <div>
+       @RenderBody();
+   </div>
+
+    <script type="text/javascript" src="~/jsx/d3.js"></script>
+    <script type="text/javascript" src="~/jsx/crossfilter.js"></script>
+    <script type="text/javascript" src="~/jsx/dc.js"></script>
+    <script type="text/javascript" src="~/jsx/leaflet.js"></script>
+    <script src="~/jsx/colorbrewer.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <!--Optional-->
+    <script type="text/javascript" src="~/jsx/leaflet.markercluster.js"></script>
+
+    <script type="text/javascript" src="~/jsx/dc.leaflet.js"></script>
+
+    <script src="~/jsx/Test.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

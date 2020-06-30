@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ClientApp.Models;
 using Infratrastructure.CoreLogic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClientApp.Controllers
 {
@@ -19,12 +20,15 @@ namespace ClientApp.Controllers
         {
             _logger = logger;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
-
+        public IActionResult Map()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
@@ -38,10 +42,6 @@ namespace ClientApp.Controllers
         [HttpGet]
         public async Task<ActionResult> getFarmersProfile()
         {
-            //var blogs =_context.Transactions
-            //        .Include(sa=>sa.Txns)
-
-            //        .ToList();
             var results = await _coreLogic.getAllFarmersData();
             return Json(results);
         }

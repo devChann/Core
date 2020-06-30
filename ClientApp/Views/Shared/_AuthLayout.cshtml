@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "/Views/Shared/_LayoutMap.cshtml";
+}
+
+<div class="row">
+    <!--left column -->
+    <div class="col col-sm-6 container_left">
+        <!--Features -->
+        <div class="container_features">
+            <div class="container-fluid">
+                <h5 style="text-align: center;color:white;font-weight: bold">Features</h5>
+                <hr>
+                <p><span><img src="~/assets/bullets.svg" class="li_style"></span> Advanced Data Analytics</p>
+                <p><span><img src="~/assets/bullets.svg" class="li_style"></span>View Farmers Worth </p>
+                <p>
+                    <span><img src="~/assets/bullets.svg" class="li_style"></span>
+                    Provide Strategic Data
+                </p>
+                <p>
+                    <span><img src="~/assets/bullets.svg" class="li_style"></span>
+                    Get Agricultural Insights
+                </p>
+                <p>
+                    <span><img src="~/assets/bullets.svg" class="li_style"></span>
+                    Provide Geographic View
+                </p>
+                <div class="copy_right">
+                    <p> WB -NARIGP 2020, All Right Reserved</p>
+                </div>
+            </div>
+
+        </div>
+        <!--login -->
+        <div class="container_login">
+            <div class="container-fluid">
+                @RenderBody();
+            </div>
+        </div>
+    </div>
+
+    <!--Right Column -->
+    <div class="col col-sm-6 container_right">
+        <div class="logo">
+            <img src="~/assets/kiambu-logo-web.png" style="align-items:center;width:350px;height:150px">
+            <br>
+            <h5 style="justify-content: center;color: white;font-weight: bolder">Kiambu County Goverment</h5>
+            <br>
+            <h5 style="justify-content: center;color: white;font-weight: bolder">NARIGP Project</h5>
+            <br>
+        </div>
+        <!--content-->
+        <div style="width: 60%; float: right;text-align:center">
+            <P>
+                The development objectives of National Agricultural and Rural
+                Inclusive Growth Project for Kenya are to increase agricultural
+                productivity and profitability of targeted rural communities
+                in selected Counties, and in the event of an Eligible Crisis or Emergency,
+                to provide immediate and effective response.
+            </P>
+        </div>
+        <div class="support">
+            <p>Designed by  <span><a href="#"> Oakar Services Limited</a></span></p>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

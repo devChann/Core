@@ -173,53 +173,53 @@
   border-color: #1b487d;
 }
 
-.category-ATROPELAMENTO {
-  fill: #3584bb;
-  stroke: #34598f;
-  background: #3584bb;
-  border-color: #34598f;
+.category-Sheep {
+    fill: #3584bb;
+    stroke: #34598f;
+    background: #3584bb;
+    border-color: #34598f;
 }
 
-.category-CAPOTAGEM {
-  fill: #4b92c3;
-  stroke: #3e6c93;
-  background: #4b92c3;
-  border-color: #3e6c93;
+.category-Poultry {
+    fill: #4b92c3;
+    stroke: #3e6c93;
+    background: #4b92c3;
+    border-color: #3e6c93;
 }
 
-.category-CHOQUE {
-  fill: #629fca;
-  stroke: #4d739a;
-  background: #629fca;
-  border-color: #4d739a;
+.category-Dairy Cattle {
+    fill: #629fca;
+    stroke: #4d739a;
+    background: #629fca;
+    border-color: #4d739a;
 }
 
-.category-COLISAO {
-  fill: #78add2;
-  stroke: #4f7c9e;
-  background: #78add2;
-  border-color: #4f7c9e;
+.category-Beans {
+    fill: #78add2;
+    stroke: #4f7c9e;
+    background: #78add2;
+    border-color: #4f7c9e;
 }
 
-.category-EVENTUAL {
-  fill: #8fbbd9;
-  stroke: #708fac;
-  background: #8fbbd9;
-  border-color: #708fac;
+.category-Avocado {
+    fill: #8fbbd9;
+    stroke: #708fac;
+    background: #8fbbd9;
+    border-color: #708fac;
 }
 
-.category-INCENDIO {
-  fill: #a5c8e1;
-  stroke: #819cb4;
-  background: #a5c8e1;
-  border-color: #819cb4;
+.category-Napier Grass {
+    fill: #a5c8e1;
+    stroke: #819cb4;
+    background: #a5c8e1;
+    border-color: #819cb4;
 }
 
-.category-QUEDA {
-  fill: #bbd6e8;
-  stroke: #7f95a7;
-  background: #bbd6e8;
-  border-color: #7f95a7;
+.category-Agriculture {
+    fill: #bbd6e8;
+    stroke: #7f95a7;
+    background: #bbd6e8;
+    border-color: #7f95a7;
 }
 
 .category-TOMBAMENTO {

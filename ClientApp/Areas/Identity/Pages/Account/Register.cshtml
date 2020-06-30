@@ -1,0 +1,42 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
+}
+
+    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <h3 style="text-align: center;margin-top: 1rem">Register</h3>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @*<label>Email</label>*@
+            <div class="input-group form-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input asp-for="Input.Email" class="form-control" placeholder="Email"/>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            @*<label>Password</label>*@
+            <div class="input-group form-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input asp-for="Input.Password" class="form-control" placeholder="Password"/>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            @*<label>Confirm Password</label>*@
+            <div class="input-group form-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password"/>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" id="btn_login" class="btn login_btn">Register</button>
+</form>
+   
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

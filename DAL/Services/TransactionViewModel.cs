@@ -10,8 +10,8 @@ namespace DAL.Services
 {
     public class TransactionViewModel
     {
-        
 
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Gender { get; set; }
@@ -22,8 +22,9 @@ namespace DAL.Services
         public Geometry Geometry { get; set; }
         public IEnumerable<Contexts.Txns> Results { get; set; }
 
-        public TransactionViewModel(string name, string phone, string gender, string ageGroup, string subCounty, string ward, string vcgroup, Geometry geometry, IEnumerable<Contexts.Txns> results)
+        public TransactionViewModel(string id,string name, string phone, string gender, string ageGroup, string subCounty, string ward, string vcgroup, Geometry geometry, IEnumerable<Contexts.Txns> results)
         {
+            Id = id;
             Name = name;
             Phone = phone;
             Gender = gender;

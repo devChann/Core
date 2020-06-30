@@ -4,22 +4,63 @@ L.tileLayer("https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png", {
 }).addTo(map);
 var metadata,
   rmax = 30;
+const markerclusters = L.markerClusterGroup({
+    maxClusterRadius: 2 * rmax,
+    ////iconCreateFunction: defineClusterIcon //this is where the magic happens
+});
+map.addLayer(markerclusters);
 
 const rowChartAgriactivities = new dc.RowChart("#rowchart");
 const revRowChart = new dc.RowChart("#revRowChart");
 const numberOfFarmers = new dc.DataCount(".dc-data-count");
 
-//init(defineClusterIconAsBarChart); // plot the markerCluster as barChart
 
-//function init(chartType) {
 d3.json("Home/getFarmersProfile").then((d, error) => {
   if (!error) {
-    var data = JSON.parse(d);
+      var data = JSON.parse(d);
+
+      console.log(data);
+      var trans = data.features.map(sa => {
+          return sa.properties.Txns
+      });
+      var data2 = trans.flat();
+      console.log(data2)
+      var dataP = []
+      var pos = {}
+      data2.forEach(function (d) {
+          var geo = data.features.find(f => f.properties.Id === d.TransactionId);
+          //console.log(geo);
+          var points = geo.geometry.coordinates;
+         // console.log(points)
+          //if (Array.isArray(points[0][0]))
+          //    points = geo.geometry.coordinates.reduce(function (p, v) {
+          //        return p.concat(v);
+          //    }, []);
+          //var p = [d3.sum(points, p => +p[1]) / points.length, d3.sum(points, p => +p[0]) / points.length];
+         
+          pos[d.TransactionId] = points;
+          //console.log(pos)
+          //d.sum = 0;
+          //for (var p in d)
+          //    if (p && p != "code" && p != "sum") {
+          //        dataP.push({ 'code': d.code, 'type': p, 'value': +d[p] });
+          //        d.sum += +d[p];
+          //    }
+          //if (d.sum > max)
+          //    max = d.sum;
+      });
+
+      console.log(pos);
+
     var metadata = data.properties;
 
-    console.log(data.features);
+      var markers = L.geoJson(data, {
+          pointToLayer: defineFeature,
+          onEachFeature: defineFeaturePopup
+      });
 
-    // create data crossfilter data //
+      markerclusters.addLayer(markers);
+      map.fitBounds(markers.getBounds());
 
     const ndx = crossfilter(data.features);
 
@@ -52,35 +93,23 @@ d3.json("Home/getFarmersProfile").then((d, error) => {
       d.geometry;
     });
 
-    var markers = L.geoJson(
-      geomDimension.top(Infinity),
-      {
-        pointToLayer: defineFeature,
-        onEachFeature: defineFeaturePopup,
-      },
-      {
-        pointToLayer: function (feature, latlng) {
-          return L.circleMarker(latlng, {
-            radius: 4,
-            fillColor: "steelblue",
-            color: "#fff",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8,
-          }).bindPopup(feature.properties.Name);
-        },
-      }
-    );
-
-    markerclusters = L.markerClusterGroup({
-      maxClusterRadius: 2 * rmax,
-      //   iconCreateFunction: chartType,
-    });
-
-    map.addLayer(markerclusters);
-    markerclusters.addLayer(markers);
-    map.fitBounds(markers.getBounds());
-    renderLegend();
+      var geoJsonLayer = L.geoJson({
+          type: 'FeatureCollection',
+          features: geomDimension.top(Infinity)
+      }, {
+          pointToLayer: function (feature, latlng) {
+              return L.circleMarker(latlng, {
+                  radius: 4,
+                  fillColor: "steelblue",
+                  color: "#fff",
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8
+              })
+                  .bindPopup(feature.properties['Name'].toString());
+          }
+      }).addTo(map);
+   
 
     const rowChartAgriactivitiesDim = ndx.dimension(
       (d) => d.properties.Txns.map((c) => c.Category),
@@ -187,7 +216,7 @@ d3.json("Home/getFarmersProfile").then((d, error) => {
           geometry: d,
         };
 
-        console.log(point);
+        //console.log(point);
         // return turf.inside(point, boundsFeature);
         return point;
       });
@@ -285,18 +314,17 @@ function defineClusterIconAsBarChart(cluster) {
   return myIcon;
 }
 function defineClusterIcon(cluster) {
-  var children = cluster.getAllChildMarkers(),
-    n = children.length, //Get number of markers in cluster
-    strokeWidth = 1, //Set clusterpie stroke width
-    r = rmax - 2 * strokeWidth - (n < 10 ? 12 : n < 100 ? 8 : n < 1000 ? 4 : 0), //Calculate clusterpie radius...
-    iconDim = (r + strokeWidth) * 2, //...and divIcon dimensions (leaflet really want to know the size)
-    data = d3
-      .nest() //Build a dataset for the pie chart
-      .key(function (d) {
-        return d.feature.properties.SubCounty;
-      })
+    var children = cluster.getAllChildMarkers(),
+        n = children.length, //Get number of markers in cluster
+        strokeWidth = 1, //Set clusterpie stroke width
+        r = rmax - 2 * strokeWidth - (n < 10 ? 12 : n < 100 ? 8 : n < 1000 ? 4 : 0), //Calculate clusterpie radius...
+        iconDim = (r + strokeWidth) * 2, //...and divIcon dimensions (leaflet really want to know the size)
+        data = d3
+            .nest() //Build a dataset for the pie chart
+            .key((d) => d.feature.properties.Txns.Category)
+            
       .entries(children, d3.map),
-    //bake some svg markup
+    
     html = bakeThePie({
       data: data,
       valueFunc: function (d) {
@@ -312,7 +340,7 @@ function defineClusterIcon(cluster) {
         return "category-" + d.data.key;
       },
       pathTitleFunc: function (d) {
-        return "";
+          return d.data.key + '(' + d.data.values.length + ')';
       },
     }),
     //Create a new divIcon and assign the svg markup to the html property
@@ -321,7 +349,8 @@ function defineClusterIcon(cluster) {
       className: "marker-cluster",
       iconSize: new L.Point(iconDim, iconDim),
     });
-  console.log(children);
+    console.log(data);
+    //console.log()
   return myIcon;
 }
 function renderLegend() {
@@ -422,13 +451,16 @@ function bakeThePie(options) {
   return serializeXmlNode(svg);
 }
 function defineFeature(feature, latlng) {
-  var categoryVal = feature.properties.Txns.map((d) => d.Category);
-  var myClass = "marker category-" + categoryVal[0];
+    var categoryVal = feature.properties.Txns.map((d) => {
+        return d.Category;
+    });
+   // console.log(categoryVal);
+  //var myClass = "marker category-" + categoryVal[0];
   var iconClass = L.divIcon({
-    className: myClass,
+      className: 'marker',
     iconSize: null,
   });
-  console.log(myClass);
+  //console.log(myClass);
   return L.marker(latlng, { icon: iconClass });
 }
 function defineFeaturePopup(feature, layer) {
@@ -441,7 +473,8 @@ function defineFeaturePopup(feature, layer) {
     props.Phone +
     "</span>";
   popupContent = '<div class="map-popup">' + popupContent + "</div>";
-  layer.bindPopup(popupContent, { offset: L.point(1, -2) });
+    layer.bindPopup(popupContent, { offset: L.point(1,101 });
+    console.log(popupContent);
 }
 function changeChart() {
   // markercluster.clearLayers();

@@ -1,0 +1,34 @@
+﻿body {
+  font-family: Calibri, "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif, "Gill Sans", "Gill Sans MT", Calibri,
+    "Trebuchet MS", sans-serif;
+}
+.h5 {
+  text-align: center;
+}
+.map {
+  width: 30rem;
+  height: 60vh;
+}
+
+.pie {
+  margin-left: 1px;
+}
+
+.rowChart {
+  padding-right: 35px;
+}
+.mainBarChart {
+  height: fit-content;
+}
+
+#main {
+  /* margin: 5px; */
+  width: 100% !important;
+}
+.nav {
+  padding-bottom: 5px;
+}
+.card {
+  margin: 1rem !important;
+}
