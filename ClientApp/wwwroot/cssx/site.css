@@ -1,47 +1,69 @@
-﻿.h5 {
+﻿body {
+  overflow: hidden;
+}
+.h5 {
   text-align: center;
 }
 .map {
-  width: 30rem;
-  height: 60vh;
+  width: 100%;
+  height: 100%;
 }
-
 .pie {
-  margin-left: 1px;
+  padding-left: 38px;
 }
 
 .rowChart {
-  padding-right: 35px;
 }
 .mainBarChart {
-  height: fit-content;
 }
-
-
+.qtyChart {
+}
+.revrowChart {
+}
 .nav {
-  padding-bottom: 5px;
+  padding-bottom: 2px;
 }
-.card {
-  margin: 1rem !important;
-}
+
 .card-body {
-    height: 30vh;
-    padding: 0.4rem !important;
+  height: 23.7vh;
+  padding: 0.4rem !important;
 }
 
 #main {
-    margin: 0.5rem;
-    width: 100%;
+  margin: 0.5rem;
+  width: 100%;
 }
 
 h6 {
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-    padding-left: 0.5rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 hr {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    box-shadow: 0.5rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  box-shadow: 0.5rem;
+}
+.table td,
+.table th {
+  padding: 0.4rem !important;
+  font-family: monospace !important;
+}
+.col {
+  padding-right: 0.7rem !important;
+}
+/*Popup*/
+.map-popup span.heading {
+  display: block;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.map-popup span.attribute {
+  display: block;
+}
+
+.map-popup span.label {
+  font-weight: bold;
 }

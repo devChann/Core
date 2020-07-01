@@ -3,227 +3,95 @@
     Layout = "/Views/Shared/_Layouttest.cshtml";
 }
 
-@*<div id="main" class="row">
-    <div class="col-6">
+<div id="main" class="row">
+    <div class="col-5" style="padding-right: 0.7rem !important;">
         <div class="row">
             <div class="col-7">
-                <div class="card" style="width:20rem ; height:35vh;">
-                   <h5>Data Table</h5>
-                    <hr />
+                <div class="card" style="width: 22rem;height:87vh">
+                    <h6>Data Summary</h6>
+                    <hr>
                     <div class="card-body">
+
                         <div class="table table-hover dc-data-table dc-chart" style="overflow:auto">
 
                         </div>
-                     
                     </div>
                 </div>
             </div>
-             <div class="col-5">
-                <div class="card" style="width:15rem ; height:35vh;">
-                   <h5>Data Table</h5>
-                    <hr />
-                    <div class="card-body">
-                        <div class="" style="overflow:auto">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width:25rem;">
-                   <h5>Main Agricultural Activities</h5>
-                    <div class="card-body">
-                        <div class="mainBarChart">
-
-                        </div>
-                       <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="col">
+            <div class="col-5">
                 <div class="row">
-
-                    <div class="col-12">
-                        <div class="card" style="width: 25rem;">
-                            <h5>Quantity</h5>
-                            <hr />
-                            <div class="card-body">
-                                <div class="pie">
+                    <div class="card" style="width: 18rem; margin-bottom: 0.3rem;">
+                        <h6>Main Agri Activities</h6>
+                        <hr>
+                        <div class="card-body">
+                            <div class="pie">
                                 </div>
-                                <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
-                            </div>
+                            
                         </div>
-                        
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card" style="width: 25rem;">
-                           <h5>Revenue</h5>
-                            <hr />
-                           <div class="card-body">
-                               <div class="revenuePie">
+                    <div class="card" style="width: 18rem; margin-bottom: 0.3rem;">
+                        <h6>Revenue</h6>
+                        <hr>
+                        <div class="card-body">
+                            <div class="revrowChart"></div>
+                        
+                        </div>
+                    </div>
 
-                               </div>
-                               <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
-                           </div>
+                </div>
+                <div class="row">
+                    <div class="card" style="width: 18rem;">
+                        <h6>Quantity</h6>
+                        <hr>
+                        <div class="card-body">
+                            <div class="qtyChart"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="col-2">
-        <div class="row">
-            <div class="col-12">
-                <div class="card" style="width: 15rem;heigh:60vh;">
-                    <h5>Farm Produce</h5>
-                    <hr />
-                    <div class="card-body">
-                        <div class="rowChart">
-
-                        </div>
-                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
+        <div class="card" style="width: 14.5rem;height: 87vh;">
+            <h6>Farm Products</h6>
+            <hr>
+            <div class="card-body">
+                <div class="rowChart">
+                    <div class="reset" style="visibility: hidden;">range: <span class="filter"></span>
+                    <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
+                    </div>    
                 </div>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="col-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card"  style="width:45rem">
-                    <h5>Map View</h5>
-                    <hr />
-                    <div class="card-body">
-                        <div class="map"></div>
-                         
-                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
-                    </div>
-                </div>
-            </div>
-           
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card" style="width: 20rem;">
-                <h5>Total Farmers</h5>
-                <hr />
-                <div class="card-body">
-                    <div class='dc-data-count'>
-                        <span class='filter-count'></span>
-                                selected out of <span class='total-count'></span> records.
-                    </div>
-            </div>
+                @* <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a> *@
             </div>
         </div>
     </div>
 
-</div>*@
-
-    <div id="main" class="row">
-        <div class="col-5">
-            <div class="row">
-                <div class="col-7">
-                    <div class="card" style="width: 22.5rem;">
-                        <h6>Data Summary</h6>
-                        <hr>
-                        <div class="card-body">
-
-                            <div class="table table-hover dc-data-table dc-chart" style="overflow:auto">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div class="card" style="width: 16rem;">
-                        <h6>Main Agri Activities</h6>
-                        <hr>
-                        <div class="card-body">
-
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 0.5rem;">
-                <div class="col-7">
-                    <div class="row" style=" margin-left: 0.1rem">
-                        <div class="card" style="width: 23rem; height: 23vh;">
-                            <h6>Q2</h6>
-                            <hr>
-                            <div class="card-body">
-
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top: 0.5rem; margin-left: 0.1rem;">
-                        <div class="card" style="width: 23rem;height: 27vh;">
-                            <h6>Q2</h6>
-                            <hr>
-                            <div class="card-body">
-
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div class="card" style="width: 16rem;height: 51.05vh;">
-                        <h6>Main Agri Activities</h6>
-                        <hr>
-                        <div class="card-body">
-
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-2">
-            <div class="card" style="width: 14.5rem;height: 87vh;">
-                <h6>Farm Products</h6>
+    <div class="col-5">
+        <div class="row">
+            <div class="card" style="width: 38.7rem;height: 70vh">
+                <h6>Map View</h6>
                 <hr>
                 <div class="card-body">
-                    <div class="rowChart">
-                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a>
+                    <div class="map"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 0.1rem;">
+            <div class="card" style="width: 16rem;height: 16.5vh">
+                <div class="card-body">
+                    <h6>Total Records</h6>
+                    <hr>
+                    <div class='dc-data-count'>
+                        <span class='filter-count'></span>
+                        selected out of <span class='total-count'></span> records.
                     </div>
                     
                 </div>
             </div>
         </div>
-
-        <div class="col-5">
-            <div class="row">
-                <div class="card" style="width: 36.5rem;height: 70vh">
-                    <h6>Map View</h6>
-                    <hr>
-                    <div class="card-body">
-
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 0.5rem;">
-                <div class="card" style="width: 15rem;height: 16vh">
-                    <div class="card-body">
-                        <h6>Total Farmers</h6>
-                        <hr>
-                        <div class='dc-data-count'>
-                            <span class='filter-count'></span>
-                            selected out of <span class='total-count'></span> records.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+
+</div>

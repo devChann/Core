@@ -91,7 +91,9 @@ namespace DAL.Services
                         Id = sa.Id,
                         Name = sa.Name,
                         Phone = sa.Phone,
-                        
+                        Gender = sa.Gender,
+                        Vcgroup = sa.Vcgroup,
+                        Ward=sa.Ward,
                         Txns = sa.Results.ToList()
                     };
                     double X = sa.Geometry.Coordinate.X;
