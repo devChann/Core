@@ -21,11 +21,6 @@ namespace ClientApp.Controllers
             _logger = logger;
         }
         
-        public IActionResult Index()
-        {
-            return View();
-        }
-        
         public IActionResult Map()
         {
             return View();

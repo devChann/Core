@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Map";
-    Layout = "/Views/Shared/_Layouttest.cshtml";
+    Layout = "/Views/Shared/_LayoutMap.cshtml";
 }
 
 <div id="main" class="row">
@@ -59,7 +59,7 @@
             <h6>Farm Products</h6>
             <hr>
             <div class="card-body">
-                <div class="rowChart">
+                <div id="spinner" class="rowChart">
                     <div class="reset" style="visibility: hidden;">range: <span class="filter"></span>
                     <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
                     </div>    

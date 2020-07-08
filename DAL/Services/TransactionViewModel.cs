@@ -1,10 +1,5 @@
-﻿using DAL.Contexts;
-using DAL.Entities;
-using GeoAPI.Geometries;
-using NetTopologySuite.Geometries;
-using System;
+﻿using NetTopologySuite.Geometries;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DAL.Services
 {

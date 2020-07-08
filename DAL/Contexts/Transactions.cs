@@ -19,9 +19,9 @@ namespace DAL.Contexts
         public string SubCounty { get; set; }
         public string Ward { get; set; }
         public string Vcgroup { get; set; }
-       
+      
         public Geometry Geometry { get; set; }
-
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Txns> Txns { get; set; }
     }
 }

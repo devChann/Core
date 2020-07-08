@@ -1,10 +1,5 @@
-﻿using DAL.Entities;
-using DAL.Interface;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Update;
+﻿using DAL.Interface;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infratrastructure.CoreLogic

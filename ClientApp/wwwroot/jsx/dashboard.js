@@ -1,45 +1,87 @@
-﻿d3.json("Home/getFarmersProfile").then((data) => {
-  drawMarkerSelect(data);
-});
+﻿//global  variables
 
-function drawMarkerSelect(data) {
-  var data = JSON.parse(data);
+var chartConfig = {
+    target: 'spinner'
+};
 
-  console.log(data);
+var opts = {
+    lines: 13, // The number of lines to draw
+    length: 38, // The length of each line
+    width: 17, // The line thickness
+    radius: 45, // The radius of the inner circle
+    scale: 1, // Scales overall size of the spinner
+    corners: 1, // Corner roundness (0..1)
+    color: '#ffffff', // CSS color or array of colors
+    fadeColor: 'transparent', // CSS color or array of colors
+    speed: 1, // Rounds per second
+    rotate: 0, // The rotation offset
+    animation: 'spinner-line-fade-quick', // The CSS animation name for the lines
+    direction: 1, // 1: clockwise, -1: counterclockwise
+    zIndex: 2e9, // The z-index (defaults to 2000000000)
+    className: 'spinner', // The CSS class to assign to the spinner
+    top: '50%', // Top position relative to parent
+    left: '50%', // Left position relative to parent
+    shadow: '0 0 1px transparent', // Box-shadow for the lines
+    position: 'absolute' // Element positioning
+
+};
+var target = document.getElementById(chartConfig.target);
+
+function init() {
+   
+
+    var spinner = new Spinner(opts).spin(target);
+
+    d3.json("Home/getFarmersProfile").then((data) => {
+
+        spinner.stop();
+
+        drawMarkers(data);
+    });
+}
+
+init();
+
+function drawMarkers(d) {
+  var data = JSON.parse(d);
+
+  //console.log(data);
   var trans = data.features.map((sa) => {
     return sa.properties.Txns;
   });
   var data2 = trans.flat();
-  console.log(data2);
+ // console.log(data2);
   var dataP = [];
   var pos = {};
-  var att = [];
-  data2.forEach(function (d) {
-    var geo = data.features.find((f) => f.properties.Id === d.TransactionId);
-    var points = geo.geometry.coordinates;
-    var attributes = geo.properties;
-    pos[d.TransactionId] = points;
-    for (var p in pos) {
-      att.push({
-        TransactionId: d.TransactionId,
-        Name: attributes.Name,
-        Phone: attributes.Phone,
-      });
-    }
-  });
-  d3.map(pos, function (d) {
-    return d.TransactionId;
-  }).keys();
+    var att = [];
 
-  console.log(pos);
-  console.log(d3.keys(att));
+  data2.forEach(function (d) {
+      var geo = data.features.find((f) => f.properties.Id === d.TransactionsId);
+      //console.log(geo);
+      var points = geo.geometry.coordinates;
+    var attributes = geo.properties;
+      pos[d.TransactionsId] = points;
+    //for (var p in pos) {
+    //  att.push({
+    //    TransactionId: d.TransactionId,
+    //    Name: attributes.Name,
+    //    Phone: attributes.Phone,
+    //  });
+    //}
+  });
+  //d3.map(pos, function (d) {
+  //  return d.TransactionId;
+  //}).keys();
+
+  //console.log(pos);
+  //console.log(d3.keys(att));
   const xf = crossfilter(data2);
 
   var groupname = "marker-select";
-  var facilities = xf.dimension(function (d) {
-    return d.TransactionId;
+  var farmersDim = xf.dimension(function (d) {
+      return d.TransactionsId;
   });
-  var facilitiesGroup = facilities.group().reduce(
+    var farmersDimGrp = farmersDim.group().reduce(
     (p, v) => {
       ++p.count;
       p.Produce = v.Produce;
@@ -58,11 +100,12 @@ function drawMarkerSelect(data) {
   var marker = dc_leaflet
     .markerChart(".map", groupname)
     .locationAccessor(function (d) {
-      var tempcoordinates = pos[d.key];
+        var tempcoordinates = pos[d.key];
+        console.log(tempcoordinates);
       return tempcoordinates.reverse();
     })
-    .dimension(facilities)
-    .group(facilitiesGroup)
+      .dimension(farmersDim)
+      .group(farmersDimGrp)
     .center([-1.17315747054207, 36.7634069650127])
     .zoom(5)
     .popup((d, marker) => {
@@ -77,10 +120,10 @@ function drawMarkerSelect(data) {
       console.log(d.key);
       return popupContent;
     })
-    .filterByArea(true)
     .cluster(true);
 
-  var types = xf.dimension((d) => d.Breed);
+    var types = xf.dimension((d) => d.Breed);
+
   var typesGroup = types.group().reduceCount();
 
   var pie = dc
@@ -120,7 +163,7 @@ function drawMarkerSelect(data) {
     .xAxis()
     .ticks(5);
 
-  const farmer = xf.dimension((d) => d.TransactionId);
+    const farmer = xf.dimension((d) => d.TransactionsId);
 
   const nasdaqTable = dc
     .dataTable(".dc-data-table", groupname)

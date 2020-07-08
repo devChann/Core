@@ -1,23 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DAL.DataContext;
-using Microsoft.EntityFrameworkCore;
-using GeoJSON.Net.Feature;
+﻿using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
 using System.Linq;
-using NetTopologySuite.IO;
 using Newtonsoft.Json;
 using DAL.Interface;
 using System.Threading.Tasks;
-using System.Collections;
-using Microsoft.AspNetCore.Identity;
-using DAL.Entities;
-using System.Security.Cryptography;
-using System.Runtime.CompilerServices;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using DAL.Contexts;
-using System.Xml.Linq;
 
 namespace DAL.Services
 {
@@ -71,7 +58,7 @@ namespace DAL.Services
                 //}
                 var query = farmers.GroupJoin(farmActivities,
                     fp => fp.Id,
-                    fa => fa.TransactionId,
+                    fa => fa.TransactionsId,
                     (fp, results) => new TransactionViewModel(
                     fp.Id ,   
                     fp.Name,
@@ -104,7 +91,7 @@ namespace DAL.Services
                 });
             }
             var actualJson = JsonConvert.SerializeObject(geojsonndata);
-            return actualJson;
+            return  actualJson;
 
         }
     }

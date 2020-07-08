@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace ClientApp
 {
@@ -25,6 +26,11 @@ namespace ClientApp
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddControllers()
+                .AddNewtonsoftJson(ops =>
+                {
+                    ops.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

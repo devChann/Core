@@ -51,11 +51,11 @@ namespace DAL.Contexts
             {
                 entity.HasIndex(e => e.TransactionsId);
 
-                entity.Property(e => e.TransactionId)
-                    .IsRequired()
-                    .HasMaxLength(36);
+                //entity.Property(e => e.TransactionId)
+                //    .IsRequired()
+                //    .HasMaxLength(36);
 
-                entity.Property(e => e.TransactionsId).HasMaxLength(36);
+                //entity.Property(e => e.TransactionsId).HasMaxLength(36);
 
                 entity.HasOne(d => d.Transactions)
                     .WithMany(p => p.Txns)
