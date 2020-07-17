@@ -85,4 +85,7 @@ overflow:hidden;
 } 
 .support a {
     color: orangered;
-}   
+}
+.nav {
+   padding: .09rem 1rem !important;
+}

@@ -53,40 +53,48 @@ function drawMarkers(d) {
  // console.log(data2);
   var dataP = [];
   var pos = {};
-    var att = [];
-
   data2.forEach(function (d) {
       var geo = data.features.find((f) => f.properties.Id === d.TransactionsId);
       //console.log(geo);
       var points = geo.geometry.coordinates;
     var attributes = geo.properties;
       pos[d.TransactionsId] = points;
-    //for (var p in pos) {
-    //  att.push({
-    //    TransactionId: d.TransactionId,
-    //    Name: attributes.Name,
-    //    Phone: attributes.Phone,
-    //  });
-    //}
-  });
-  //d3.map(pos, function (d) {
-  //  return d.TransactionId;
-  //}).keys();
+      dataP.push({
+          'Name': attributes.Name,
+          'Phone': attributes.Phone,
+          'SubCounty': attributes.SubCounty,
+          'Ward': attributes.Ward,
+          'Age': d.Age,
+          'AmtofMilkdp': d.AmtofMilkdp,
+          'Breed': d.Breed,
+          'BreedGender': d.BreedGender,
 
-  //console.log(pos);
-  //console.log(d3.keys(att));
-  const xf = crossfilter(data2);
-
-  var groupname = "marker-select";
-  var farmersDim = xf.dimension(function (d) {
-      return d.TransactionsId;
+        'Category': d.Category,
+        'Id': d.Id,
+        'Produce': d.Produce,
+        'Quantity': d.Quantity,
+        'Revenue': "",
+        'TransactionsId':d.TransactionsId,
+        'UpdateTime': d.UpdateTime })
+  
   });
+  
+    const xf = crossfilter(dataP);
+    //console.log(dataP);
+    console.log(dataP);
+    var groupname = "marker-select";
+    var farmersDim = xf.dimension(function (d) {
+        return d.TransactionsId;
+    });
     var farmersDimGrp = farmersDim.group().reduce(
-    (p, v) => {
-      ++p.count;
-      p.Produce = v.Produce;
-      p.Category = v.Category;
-      return p;
+        (p, v) => {
+            ++p.count;
+            p.Name = v.Name;
+            p.Phone = v.Phone;
+            p.Ward = v.Ward
+
+
+            return p;
     },
     (p, v) => {
       --p.count;
@@ -101,7 +109,7 @@ function drawMarkers(d) {
     .markerChart(".map", groupname)
     .locationAccessor(function (d) {
         var tempcoordinates = pos[d.key];
-        console.log(tempcoordinates);
+        //console.log(tempcoordinates);
       return tempcoordinates.reverse();
     })
       .dimension(farmersDim)
@@ -111,13 +119,13 @@ function drawMarkers(d) {
     .popup((d, marker) => {
       popupContent = "";
       popupContent +=
-        '<span class="attribute"><span class="label" style="color: #000000">' +
-        d.value.Category +
-        ":</span> " +
-        d.value.Produce +
-        "</span>";
+        '<ul style="list-style-type:none;padding-inline-start: 5px !important;>' +
+            '<li><span class="attribute">' + 'Name :' + '<span class="label" style="color: #000000">' + d.value.Name + '</span></span></li>'+
+            ' <li><span class="attribute">' + 'Phone :' + '<span class="label" style="color: #000000">' + d.value.Phone +  '</span></span></li>'+
+            ' <li><span class="attribute">' + 'Ward :' + '<span class="label" style="color: #000000">' + d.value.Ward +  '</span></span></l> '+
+          '</ul>';
       popupContent = '<div class="map-popup">' + popupContent + "</div>";
-      console.log(d.key);
+     // console.log(d.key);
       return popupContent;
     })
     .cluster(true);
@@ -231,5 +239,8 @@ function drawMarkers(d) {
 
   dc.renderAll(groupname);
 
-  return { marker: marker, pie: pie };
+    return {
+        marker: marker,
+        pie: pie
+    };
 }

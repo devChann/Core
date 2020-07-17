@@ -62,8 +62,17 @@ hr {
 
 .map-popup span.attribute {
   display: block;
+  
 }
 
 .map-popup span.label {
   font-weight: bold;
+}
+.svg{
+    color:black !important;
+}
+.leaflet-popup-content {
+    margin: 13px 15px;
+    line-height: 1.7;
+    
 }

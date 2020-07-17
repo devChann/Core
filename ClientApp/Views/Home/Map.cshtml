@@ -1,8 +1,48 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ClientApp.Areas.Identity.Data
+
+@inject SignInManager<ClientAppUser> SignInManager
+@inject UserManager<ClientAppUser> UserManager
+
+@{
     ViewData["Title"] = "Map";
     Layout = "/Views/Shared/_LayoutMap.cshtml";
 }
 
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">DAT | One Million Farmers Platform</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>    
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/login",new { logoutId = 1})" >
+                    <span class="navbar-text">
+                       <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a> 
+                    </span>
+                    @*<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">*@
+                    <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit">LogOut</button>
+                </form>
+                @*<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+
+                    <span class="navbar-text">
+                        Data Analyzer | <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a> |  <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                    </span>
+                </form>*@
+
+            }
+
+        </div>
+    </nav>
+</header>
 <div id="main" class="row">
     <div class="col-5" style="padding-right: 0.7rem !important;">
         <div class="row">
@@ -21,12 +61,12 @@
             <div class="col-5">
                 <div class="row">
                     <div class="card" style="width: 18rem; margin-bottom: 0.3rem;">
-                        <h6>Main Agri Activities</h6>
+                        <h6>Breed | Variety</h6>
                         <hr>
                         <div class="card-body">
                             <div class="pie">
-                                </div>
-                            
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -36,7 +76,7 @@
                         <hr>
                         <div class="card-body">
                             <div class="revrowChart"></div>
-                        
+
                         </div>
                     </div>
 
@@ -60,9 +100,10 @@
             <hr>
             <div class="card-body">
                 <div id="spinner" class="rowChart">
-                    <div class="reset" style="visibility: hidden;">range: <span class="filter"></span>
-                    <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
-                    </div>    
+                    <div class="reset" style="visibility: hidden;">
+                        range: <span class="filter"></span>
+                        <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
+                    </div>
                 </div>
                 @* <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a> *@
             </div>
@@ -88,7 +129,7 @@
                         <span class='filter-count'></span>
                         selected out of <span class='total-count'></span> records.
                     </div>
-                    
+
                 </div>
             </div>
         </div>

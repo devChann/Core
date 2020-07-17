@@ -20,7 +20,7 @@ namespace ClientApp.Controllers
         {
             _logger = logger;
         }
-        
+        [Authorize]
         public IActionResult Map()
         {
             return View();
