@@ -1,5 +1,6 @@
 ﻿body {
   overflow: hidden;
+  color: white !important;
 }
 .h5 {
   text-align: center;
@@ -27,9 +28,11 @@
 .navbar {
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 .bg-light {
   background-color: #402621 !important;
+  height: 55px;
 }
 .navbar-light .navbar-brand {
   color: rgb(0 123 255) !important;
@@ -38,30 +41,39 @@
   color: #296eff !important;
 }
 .card-body {
-  height: 23.7vh;
+  height: 23vh;
   padding: 0.4rem !important;
 }
-
+.card {
+  background-color: transparent;
+  /* background-clip: border-box; */
+  border: 1px solid rgb(21 123 255);
+}
 #main {
-  margin: 0.5rem;
+  padding-top: 5px;
+  margin-left: 0.01px;
   width: 100%;
+  background-color: #402621;
 }
 
 h6 {
   font-size: 0.8rem;
   margin-top: 0.5rem;
   padding-left: 0.5rem;
+  color: #296eff;
 }
 
 hr {
   margin-top: 0rem;
   margin-bottom: 0rem;
   box-shadow: 0.5rem;
+  border-top: 1px solid rgb(245 222 179);
 }
 .table td,
 .table th {
   padding: 0.4rem !important;
   font-family: monospace !important;
+  color: wheat;
 }
 .col {
   padding-right: 0.7rem !important;
