@@ -28,18 +28,10 @@
                     <span class="navbar-text">
                        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a> 
                     </span>
-                    @*<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">*@
+                   
                     <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit">LogOut</button>
                 </form>
-                @*<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-
-                    <span class="navbar-text">
-                        Data Analyzer | <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a> |  <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                    </span>
-                </form>*@
-
             }
-
         </div>
     </nav>
 </header>
@@ -100,10 +92,11 @@
             <hr>
             <div class="card-body">
                 <div id="spinner" class="rowChart">
-                    <div class="reset" style="visibility: hidden;">
+                    <div id = "spinx" class="lv-bars lv-mid lg" data-label="Loading..."></div>
+                    @* <div class="reset" style="visibility: hidden;">
                         range: <span class="filter"></span>
                         <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
-                    </div>
+                    </div> *@
                 </div>
                 @* <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a> *@
             </div>

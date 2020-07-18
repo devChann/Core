@@ -20,10 +20,23 @@
 }
 .revrowChart {
 }
+/* overide the default boostrap */
 .nav {
   padding-bottom: 2px;
 }
-
+.navbar {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+.bg-light {
+  background-color: #402621 !important;
+}
+.navbar-light .navbar-brand {
+  color: rgb(0 123 255) !important;
+}
+.text-dark {
+  color: #296eff !important;
+}
 .card-body {
   height: 23.7vh;
   padding: 0.4rem !important;
@@ -62,17 +75,15 @@ hr {
 
 .map-popup span.attribute {
   display: block;
-  
 }
 
 .map-popup span.label {
   font-weight: bold;
 }
-.svg{
-    color:black !important;
+.svg {
+  color: black !important;
 }
 .leaflet-popup-content {
-    margin: 13px 15px;
-    line-height: 1.7;
-    
+  margin: 13px 15px;
+  line-height: 1.7;
 }

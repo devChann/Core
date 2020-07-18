@@ -1,43 +1,43 @@
 ﻿//global  variables
 
 var chartConfig = {
-    target: 'spinner'
+  target: "spinx",
 };
 
 var opts = {
-    lines: 13, // The number of lines to draw
-    length: 38, // The length of each line
-    width: 17, // The line thickness
-    radius: 45, // The radius of the inner circle
-    scale: 1, // Scales overall size of the spinner
-    corners: 1, // Corner roundness (0..1)
-    color: '#ffffff', // CSS color or array of colors
-    fadeColor: 'transparent', // CSS color or array of colors
-    speed: 1, // Rounds per second
-    rotate: 0, // The rotation offset
-    animation: 'spinner-line-fade-quick', // The CSS animation name for the lines
-    direction: 1, // 1: clockwise, -1: counterclockwise
-    zIndex: 2e9, // The z-index (defaults to 2000000000)
-    className: 'spinner', // The CSS class to assign to the spinner
-    top: '50%', // Top position relative to parent
-    left: '50%', // Left position relative to parent
-    shadow: '0 0 1px transparent', // Box-shadow for the lines
-    position: 'absolute' // Element positioning
-
+  lines: 13, // The number of lines to draw
+  length: 38, // The length of each line
+  width: 17, // The line thickness
+  radius: 45, // The radius of the inner circle
+  scale: 1, // Scales overall size of the spinner
+  corners: 1, // Corner roundness (0..1)
+  color: "#ffffff", // CSS color or array of colors
+  fadeColor: "transparent", // CSS color or array of colors
+  speed: 1, // Rounds per second
+  rotate: 0, // The rotation offset
+  animation: "spinner-line-fade-quick", // The CSS animation name for the lines
+  direction: 1, // 1: clockwise, -1: counterclockwise
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  className: "spinner", // The CSS class to assign to the spinner
+  top: "50%", // Top position relative to parent
+  left: "50%", // Left position relative to parent
+  shadow: "0 0 1px transparent", // Box-shadow for the lines
+  position: "absolute", // Element positioning
 };
+//var target = document.getElementById(chartConfig.target);
 var target = document.getElementById(chartConfig.target);
-
 function init() {
-   
+  //var spinner = new Spinner(opts).spin(target);
 
-    var spinner = new Spinner(opts).spin(target);
+  var element = lv.create(document.getElementById(chartConfig.target));
 
-    d3.json("Home/getFarmersProfile").then((data) => {
+  d3.json("Home/getFarmersProfile").then((data) => {
+    //spinner.stop();
 
-        spinner.stop();
+    element.remove();
 
-        drawMarkers(data);
-    });
+    drawMarkers(data);
+  });
 }
 
 init();
@@ -50,51 +50,49 @@ function drawMarkers(d) {
     return sa.properties.Txns;
   });
   var data2 = trans.flat();
- // console.log(data2);
+  // console.log(data2);
   var dataP = [];
   var pos = {};
   data2.forEach(function (d) {
-      var geo = data.features.find((f) => f.properties.Id === d.TransactionsId);
-      //console.log(geo);
-      var points = geo.geometry.coordinates;
+    var geo = data.features.find((f) => f.properties.Id === d.TransactionsId);
+    //console.log(geo);
+    var points = geo.geometry.coordinates;
     var attributes = geo.properties;
-      pos[d.TransactionsId] = points;
-      dataP.push({
-          'Name': attributes.Name,
-          'Phone': attributes.Phone,
-          'SubCounty': attributes.SubCounty,
-          'Ward': attributes.Ward,
-          'Age': d.Age,
-          'AmtofMilkdp': d.AmtofMilkdp,
-          'Breed': d.Breed,
-          'BreedGender': d.BreedGender,
-
-        'Category': d.Category,
-        'Id': d.Id,
-        'Produce': d.Produce,
-        'Quantity': d.Quantity,
-        'Revenue': "",
-        'TransactionsId':d.TransactionsId,
-        'UpdateTime': d.UpdateTime })
-  
-  });
-  
-    const xf = crossfilter(dataP);
-    //console.log(dataP);
-    console.log(dataP);
-    var groupname = "marker-select";
-    var farmersDim = xf.dimension(function (d) {
-        return d.TransactionsId;
+    pos[d.TransactionsId] = points;
+    dataP.push({
+      Name: attributes.Name,
+      Phone: attributes.Phone,
+      SubCounty: attributes.SubCounty,
+      Ward: attributes.Ward,
+      Age: d.Age,
+      AmtofMilkdp: d.AmtofMilkdp,
+      Breed: d.Breed,
+      BreedGender: d.BreedGender,
+      Category: d.Category,
+      Id: d.Id,
+      Produce: d.Produce,
+      Quantity: d.Quantity,
+      Revenue: d.Revenue,
+      TransactionsId: d.TransactionsId,
+      UpdateTime: d.UpdateTime,
     });
-    var farmersDimGrp = farmersDim.group().reduce(
-        (p, v) => {
-            ++p.count;
-            p.Name = v.Name;
-            p.Phone = v.Phone;
-            p.Ward = v.Ward
+  });
 
+  const xf = crossfilter(dataP);
+  //console.log(dataP);
+  console.log(dataP);
+  var groupname = "marker-select";
+  var farmersDim = xf.dimension(function (d) {
+    return d.TransactionsId;
+  });
+  var farmersDimGrp = farmersDim.group().reduce(
+    (p, v) => {
+      ++p.count;
+      p.Name = v.Name;
+      p.Phone = v.Phone;
+      p.Ward = v.Ward;
 
-            return p;
+      return p;
     },
     (p, v) => {
       --p.count;
@@ -108,29 +106,43 @@ function drawMarkers(d) {
   var marker = dc_leaflet
     .markerChart(".map", groupname)
     .locationAccessor(function (d) {
-        var tempcoordinates = pos[d.key];
-        //console.log(tempcoordinates);
+      var tempcoordinates = pos[d.key];
+      //console.log(tempcoordinates);
       return tempcoordinates.reverse();
     })
-      .dimension(farmersDim)
-      .group(farmersDimGrp)
+    .dimension(farmersDim)
+    .group(farmersDimGrp)
+    .valueAccessor((d) => d.key)
     .center([-1.17315747054207, 36.7634069650127])
     .zoom(5)
-    .popup((d, marker) => {
+    .popup((d) => {
       popupContent = "";
       popupContent +=
         '<ul style="list-style-type:none;padding-inline-start: 5px !important;>' +
-            '<li><span class="attribute">' + 'Name :' + '<span class="label" style="color: #000000">' + d.value.Name + '</span></span></li>'+
-            ' <li><span class="attribute">' + 'Phone :' + '<span class="label" style="color: #000000">' + d.value.Phone +  '</span></span></li>'+
-            ' <li><span class="attribute">' + 'Ward :' + '<span class="label" style="color: #000000">' + d.value.Ward +  '</span></span></l> '+
-          '</ul>';
+        '<li><span class="attribute">' +
+        "Name :" +
+        '<span class="label" style="color: #000000">' +
+        d.value.Name +
+        "</span></span></li>" +
+        ' <li><span class="attribute">' +
+        "Phone :" +
+        '<span class="label" style="color: #000000">' +
+        d.value.Phone +
+        "</span></span></li>" +
+        ' <li><span class="attribute">' +
+        "Ward :" +
+        '<span class="label" style="color: #000000">' +
+        d.value.Ward +
+        "</span></span></l> " +
+        "</ul>";
       popupContent = '<div class="map-popup">' + popupContent + "</div>";
-     // console.log(d.key);
+      // console.log(d.key);
       return popupContent;
     })
+    // .filterByArea(true)
     .cluster(true);
 
-    var types = xf.dimension((d) => d.Breed);
+  var types = xf.dimension((d) => d.Breed);
 
   var typesGroup = types.group().reduceCount();
 
@@ -171,7 +183,7 @@ function drawMarkers(d) {
     .xAxis()
     .ticks(5);
 
-    const farmer = xf.dimension((d) => d.TransactionsId);
+  const farmer = xf.dimension((d) => d.TransactionsId);
 
   const nasdaqTable = dc
     .dataTable(".dc-data-table", groupname)
@@ -239,8 +251,12 @@ function drawMarkers(d) {
 
   dc.renderAll(groupname);
 
-    return {
-        marker: marker,
-        pie: pie
-    };
+  return {
+    marker: marker,
+    pie: pie,
+    rowChartAgriactivities: rowChartAgriactivities,
+    revrowChart: revrowChart,
+    qtyChart: qtyChart,
+    revenuePie: revenuePie,
+  };
 }
