@@ -41,7 +41,7 @@
   color: #296eff !important;
 }
 .card-body {
-  height: 23vh;
+  height: 22.3vh;
   padding: 0.4rem !important;
 }
 .card {
@@ -99,3 +99,14 @@ hr {
   margin: 13px 15px;
   line-height: 1.7;
 }
+.text-footer {
+    color: #f5deb3 !important;
+    font-size:0.8rem;
+}
+.datacontent {
+    display: flex !important;
+    padding-top: 15px;
+    align-items: center;
+    justify-content: space-around;
+}
+

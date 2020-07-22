@@ -4,36 +4,14 @@ var chartConfig = {
   target: "spinx",
 };
 
-var opts = {
-  lines: 13, // The number of lines to draw
-  length: 38, // The length of each line
-  width: 17, // The line thickness
-  radius: 45, // The radius of the inner circle
-  scale: 1, // Scales overall size of the spinner
-  corners: 1, // Corner roundness (0..1)
-  color: "#ffffff", // CSS color or array of colors
-  fadeColor: "transparent", // CSS color or array of colors
-  speed: 1, // Rounds per second
-  rotate: 0, // The rotation offset
-  animation: "spinner-line-fade-quick", // The CSS animation name for the lines
-  direction: 1, // 1: clockwise, -1: counterclockwise
-  zIndex: 2e9, // The z-index (defaults to 2000000000)
-  className: "spinner", // The CSS class to assign to the spinner
-  top: "50%", // Top position relative to parent
-  left: "50%", // Left position relative to parent
-  shadow: "0 0 1px transparent", // Box-shadow for the lines
-  position: "absolute", // Element positioning
-};
-//var target = document.getElementById(chartConfig.target);
 var target = document.getElementById(chartConfig.target);
 function init() {
-  //var spinner = new Spinner(opts).spin(target);
 
   var element = lv.create(document.getElementById(chartConfig.target));
 
   d3.json("Home/getFarmersProfile").then((data) => {
     //spinner.stop();
-
+      console.log(data);
     element.remove();
 
     drawMarkers(data);
@@ -80,7 +58,7 @@ function drawMarkers(d) {
 
   const xf = crossfilter(dataP);
   //console.log(dataP);
-  console.log(dataP);
+  //console.log(dataP);
   var groupname = "marker-select";
   var farmersDim = xf.dimension(function (d) {
     return d.TransactionsId;
@@ -206,7 +184,7 @@ function drawMarkers(d) {
     .pieChart(".revenuePie", groupname)
     .dimension(revenueDim)
     .group(revenueDimGrp)
-    .width(110)
+    
     .height(110)
     .transitionDuration(1500)
     .renderLabel(true)
@@ -217,14 +195,14 @@ function drawMarkers(d) {
 
   const nasdaqCount = dc
     .dataCount(".dc-data-count", groupname)
-    .dimension(xf)
+    .crossfilter(xf)
     .group(all);
 
   const QtyDim = xf.dimension((d) => d.Category);
   const QtyDimGrp = QtyDim.group().reduceSum((d) => d.Quantity / 1000);
   const qtyChart = dc
     .barChart(".qtyChart", groupname)
-    .width(250)
+   
     .height(120)
     .x(d3.scaleBand())
     .xUnits(dc.units.ordinal)
@@ -241,7 +219,7 @@ function drawMarkers(d) {
   const revDimensionGrp = revDimension.group().reduceCount();
   const revrowChart = dc
     .rowChart(".revrowChart", groupname)
-    .width(250)
+    
     .height(130)
     .x(d3.scaleLinear().domain([6, 20]))
     .elasticX(true)
@@ -250,6 +228,24 @@ function drawMarkers(d) {
     .xAxis()
     .ticks(6);
 
+    d3.select('#download')
+        .on('click', function () {
+            var data = farmersDim.top(Infinity);
+            if (d3.select('#download-type input:checked').node().value === '.dc-data-table') {
+                data = data.sort(function (a, b) {
+                    return table.order()(table.sortBy()(a), table.sortBy()(b));
+                });
+                data = data.map(function (d) {
+                    var row = {};
+                    table.columns().forEach(function (c) {
+                        row[table._doColumnHeaderFormat(c)] = table._doColumnValueFormat(c, d);
+                    });
+                    return row;
+                });
+            }
+            var blob = new Blob([d3.csvFormat(data)], { type: "text/csv;charset=utf-8" });
+            saveAs(blob, 'farmers_data.csv');
+        });
   dc.renderAll(groupname);
 
   return {
