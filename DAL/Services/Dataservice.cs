@@ -77,10 +77,12 @@ namespace DAL.Services
                     {
                         Id = sa.Id,
                         Name = sa.Name,
+                        AgeGroup = sa.AgeGroup,
                         Phone = sa.Phone,
                         Gender = sa.Gender,
                         Vcgroup = sa.Vcgroup,
                         Ward=sa.Ward,
+                        SubCounty = sa.SubCounty,
                         Txns = sa.Results.ToList()
                     };
                     double X = sa.Geometry.Coordinate.X;

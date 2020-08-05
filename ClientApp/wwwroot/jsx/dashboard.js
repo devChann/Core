@@ -23,10 +23,11 @@ init();
 function drawMarkers(d) {
   var data = JSON.parse(d);
 
-  //console.log(data);
+ // console.log(data);
   var trans = data.features.map((sa) => {
     return sa.properties.Txns;
   });
+    //console.log(trans)
   var data2 = trans.flat();
   // console.log(data2);
   var dataP = [];
@@ -37,22 +38,27 @@ function drawMarkers(d) {
     var points = geo.geometry.coordinates;
     var attributes = geo.properties;
     pos[d.TransactionsId] = points;
-    dataP.push({
-      Name: attributes.Name,
-      Phone: attributes.Phone,
+      dataP.push({
+          Id: d.Id,
+         
+          Name: attributes.Name, AgeGroup: attributes.AgeGroup,
+          Phone: attributes.Phone,
+          Vcgroup : attributes.Vcgroup,
+
       SubCounty: attributes.SubCounty,
       Ward: attributes.Ward,
-      Age: d.Age,
+          Category: d.Category,
       AmtofMilkdp: d.AmtofMilkdp,
-      Breed: d.Breed,
+          Breed: d.Breed, Age: d.Age,
       BreedGender: d.BreedGender,
-      Category: d.Category,
-      Id: d.Id,
+     
+     
       Produce: d.Produce,
       Quantity: d.Quantity,
-      Revenue: d.Revenue,
+          Revenue: d.Revenue,
+          UpdateTime: d.UpdateTime,
       TransactionsId: d.TransactionsId,
-      UpdateTime: d.UpdateTime,
+      
     });
   });
 
@@ -63,6 +69,7 @@ function drawMarkers(d) {
   var farmersDim = xf.dimension(function (d) {
     return d.TransactionsId;
   });
+    // wil not filter the map
   var farmersDimGrp = farmersDim.group().reduce(
     (p, v) => {
       ++p.count;
@@ -79,50 +86,56 @@ function drawMarkers(d) {
     () => {
       return { count: 0 };
     }
-  );
+    );
 
-  var marker = dc_leaflet
-    .markerChart(".map", groupname)
-    .locationAccessor(function (d) {
-      var tempcoordinates = pos[d.key];
-      //console.log(tempcoordinates);
-      return tempcoordinates.reverse();
-    })
-    .dimension(farmersDim)
-    .group(farmersDimGrp)
-    .valueAccessor((d) => d.key)
-    .center([-1.17315747054207, 36.7634069650127])
-    .zoom(5)
-    .popup((d) => {
-      popupContent = "";
-      popupContent +=
-        '<ul style="list-style-type:none;padding-inline-start: 5px !important;>' +
-        '<li><span class="attribute">' +
-        "Name :" +
-        '<span class="label" style="color: #000000">' +
-        d.value.Name +
-        "</span></span></li>" +
-        ' <li><span class="attribute">' +
-        "Phone :" +
-        '<span class="label" style="color: #000000">' +
-        d.value.Phone +
-        "</span></span></li>" +
-        ' <li><span class="attribute">' +
-        "Ward :" +
-        '<span class="label" style="color: #000000">' +
-        d.value.Ward +
-        "</span></span></l> " +
-        "</ul>";
-      popupContent = '<div class="map-popup">' + popupContent + "</div>";
-      // console.log(d.key);
-      return popupContent;
-    })
-    // .filterByArea(true)
-    .cluster(true);
+    var facilities = xf.dimension(function (d) {
+        return d.TransactionsId;
+    });
+    var facilitiesGroup = facilities.group();
+    var choro = dc_leaflet
+        .markerChart(".map", groupname)
+        .dimension(facilities)
+        .group(facilitiesGroup)
+        //.width(600)
+        //.height(400)
+        .center([-1.17315747054207, 36.7634069650127])
+        .zoom(7)
+        .cluster(true)
+        .locationAccessor(function (d) {
+            var tempcoordinates = pos[d.key];
+            //console.log(tempcoordinates);
+            return tempcoordinates.reverse();
+        })
+        .popup((d) => {
+            var result = dataP.filter((obj) => obj.TransactionsId === d.key)[0];
+            //console.log(result);
+            popupContent = "";
+            popupContent +=
+                '<ul style="list-style-type:none;padding-inline-start: 5px !important;>' +
+                '<li><span class="attribute">' +
+                "Name :" +
+                '<span class="label" style="color: #000000">' +
+                result.Name +
+                "</span></span></li>" +
+                ' <li><span class="attribute">' +
+                "Phone :" +
+                '<span class="label" style="color: #000000">' +
+                result.Phone +
+                "</span></span></li>" +
+                ' <li><span class="attribute">' +
+                "Ward :" +
+                '<span class="label" style="color: #000000">' +
+                result.Ward +
+                "</span></span></l> " +
+                "</ul>";
+            popupContent = '<div class="map-popup">' + popupContent + "</div>";
+            //console.log(popupContent);
+            return popupContent;
+        });
 
   var types = xf.dimension((d) => d.Breed);
 
-  var typesGroup = types.group().reduceCount();
+  var typesGroup = types.group().reduceSum(d=>d.Quantity);
 
   var pie = dc
     .pieChart(".pie", groupname)
@@ -149,10 +162,10 @@ function drawMarkers(d) {
   const farmProduceDim = xf.dimension((d) => d.Produce);
   const farmProduceDimGrp = farmProduceDim
     .group()
-    .reduceCount((d) => d.Produce);
+    .reduceSum((d) => d.Quantity);
 
   const rowChartAgriactivities = dc
-    .rowChart(".rowChart", groupname)
+    .rowChart(".rowChart",groupname)
     .dimension(farmProduceDim)
     .group(farmProduceDimGrp)
     .height(500)
@@ -165,13 +178,13 @@ function drawMarkers(d) {
   const farmer = xf.dimension((d) => d.TransactionsId);
 
   const nasdaqTable = dc
-    .dataTable(".dc-data-table", groupname)
+    .dataTable(".dc-data-table",groupname)
     .dimension(farmer)
     .group((d) => {
       return "";
     })
     .size(14)
-    .columns(["Category", "Produce", "Quantity", "Revenue"])
+    .columns(["Category", "Produce", "Quantity"])
     .order(d3.ascending)
     .on("renderlet", function (table) {
       table.selectAll(".dc-table-group").classed("info", true);
@@ -194,31 +207,28 @@ function drawMarkers(d) {
     });
 
   const nasdaqCount = dc
-    .dataCount(".dc-data-count", groupname)
+    .dataCount(".dc-data-count",groupname)
     .crossfilter(xf)
     .group(all);
 
-  const QtyDim = xf.dimension((d) => d.Category);
-  const QtyDimGrp = QtyDim.group().reduceSum((d) => d.Quantity / 1000);
-  const qtyChart = dc
-    .barChart(".qtyChart", groupname)
-   
-    .height(120)
-    .x(d3.scaleBand())
-    .xUnits(dc.units.ordinal)
-    .brushOn(false)
-    // .xAxisLabel("Agri Activities")
-    // .yAxisLabel("Quantity * 10k")
-    .dimension(QtyDim)
-    .barPadding(0.1)
-    .outerPadding(0.05)
-    .group(QtyDimGrp)
-    .yAxis()
-    .ticks(5);
-  const revDimension = xf.dimension((d) => d.Category);
-  const revDimensionGrp = revDimension.group().reduceCount();
+    const QtyDim = xf.dimension((d) => d.Vcgroup);
+    const QtyDimGrp = QtyDim.group().reduceCount();
+    var qtyChart = dc
+        .pieChart(".qtyChart", groupname)
+        .dimension(QtyDim)
+        .group(QtyDimGrp)
+        .width(125)
+        .height(125)
+        .renderLabel(true)
+        .renderTitle(true)
+        .radius(80)
+        .ordering(function (p) {
+            return -p.value;
+        });
+   const revDimension = xf.dimension((d) => d.Category);
+  const revDimensionGrp = revDimension.group().reduceSum(d=> Math.floor(d.Quantity/1000));
   const revrowChart = dc
-    .rowChart(".revrowChart", groupname)
+    .rowChart(".revrowChart",groupname)
     
     .height(130)
     .x(d3.scaleLinear().domain([6, 20]))
@@ -226,7 +236,7 @@ function drawMarkers(d) {
     .dimension(revDimension)
     .group(revDimensionGrp)
     .xAxis()
-    .ticks(6);
+    .ticks(5);
 
     d3.select('#download')
         .on('click', function () {
@@ -249,11 +259,11 @@ function drawMarkers(d) {
   dc.renderAll(groupname);
 
   return {
-    marker: marker,
+      choro: choro,
     pie: pie,
-    rowChartAgriactivities: rowChartAgriactivities,
-    revrowChart: revrowChart,
-    qtyChart: qtyChart,
-    revenuePie: revenuePie,
+    //rowChartAgriactivities: rowChartAgriactivities,
+    //revrowChart: revrowChart,
+    //qtyChart: qtyChart,
+    //revenuePie: revenuePie,
   };
 }
