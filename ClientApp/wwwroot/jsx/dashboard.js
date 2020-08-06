@@ -43,9 +43,9 @@ function drawMarkers(d) {
          
           Name: attributes.Name, AgeGroup: attributes.AgeGroup,
           Phone: attributes.Phone,
-          Vcgroup : attributes.Vcgroup,
+          "Projects" : attributes.Vcgroup,
 
-      SubCounty: attributes.SubCounty,
+      "IDNO": attributes.SubCounty,
       Ward: attributes.Ward,
           Category: d.Category,
       AmtofMilkdp: d.AmtofMilkdp,
@@ -88,14 +88,14 @@ function drawMarkers(d) {
     }
     );
 
-    var facilities = xf.dimension(function (d) {
+    var farmers = xf.dimension(function (d) {
         return d.TransactionsId;
     });
-    var facilitiesGroup = facilities.group();
+    var farmersGroup = farmers.group();
     var choro = dc_leaflet
         .markerChart(".map", groupname)
-        .dimension(facilities)
-        .group(facilitiesGroup)
+        .dimension(farmers)
+        .group(farmersGroup)
         //.width(600)
         //.height(400)
         .center([-1.17315747054207, 36.7634069650127])
@@ -183,7 +183,7 @@ function drawMarkers(d) {
     .group((d) => {
       return "";
     })
-    .size(14)
+    .size(10)
     .columns(["Category", "Produce", "Quantity"])
     .order(d3.ascending)
     .on("renderlet", function (table) {
@@ -211,7 +211,7 @@ function drawMarkers(d) {
     .crossfilter(xf)
     .group(all);
 
-    const QtyDim = xf.dimension((d) => d.Vcgroup);
+    const QtyDim = xf.dimension((d) => d.Projects);
     const QtyDimGrp = QtyDim.group().reduceCount();
     var qtyChart = dc
         .pieChart(".qtyChart", groupname)
@@ -237,6 +237,14 @@ function drawMarkers(d) {
     .group(revDimensionGrp)
     .xAxis()
     .ticks(5);
+
+
+    var cigsDim = xf.dimension(d=>d.Category)
+    var cigsSelect = dc.selectMenu('#cigs', groupname)
+        .dimension(cigsDim)
+        .group(cigsDim.group())
+        .controlsUseVisibility(true);
+
 
     d3.select('#download')
         .on('click', function () {

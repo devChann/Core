@@ -15,6 +15,9 @@
 
 .rowChart {
 }
+.cigs{
+
+}
 .mainBarChart {
 }
 .qtyChart {
@@ -110,4 +113,25 @@ hr {
     align-items: center;
     justify-content: space-around;
 }
-
+.dc-chart select {
+    width: 190px;
+    display: block;
+    /* width: 100%;*/
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #f5deb3;
+    background-color:transparent;
+    background-clip: padding-box;
+    border: 1px solid #017bff;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+option {
+    /* margin: 40px;*/
+    background: #402621;
+    color: #f5deb3;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
