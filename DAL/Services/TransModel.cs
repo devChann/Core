@@ -17,6 +17,12 @@ namespace DAL.Services
         public string SubCounty { get; set; }
         public string Ward { get; set; }
         public string Vcgroup { get; set; }
+        public string C302 { get; set; }
+        public string C11501 { get; set; }
+        public string C11301 { get; set; }
+        public double Long { get; set; }
+        public double Lat { get; set; }
+
         public Geometry Geometry { get; set; }
         public List<Txns> Txns { get; set; }
     }

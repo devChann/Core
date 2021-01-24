@@ -10,7 +10,21 @@
   height: 100% !important;
 }
 .pie {
-  padding-left: 38px;
+  padding-left: 37px;
+}
+.pos{
+
+}
+
+.numbers {
+  
+    width: 150px;
+    font-size: 35px;
+    text-align: center;
+    
+    padding-bottom: 5px;
+    height: 50px;
+    line-height: normal;
 }
 
 .rowChart {
@@ -21,7 +35,7 @@
 .mainBarChart {
 }
 .qtyChart {
-    padding-left: 38px;
+    padding-left: 37px;
 }
 .revrowChart {
 }
@@ -35,17 +49,21 @@
   padding-bottom: 0.5rem !important;
 }
 .bg-light {
-  background-color: #402621 !important;
-  height: 55px;
+    background-color: #093521 !important;
+    height: 55px;
 }
 .navbar-light .navbar-brand {
-  color: rgb(0 123 255) !important;
+  color: white !important;
 }
 .text-dark {
-  color: #296eff !important;
+  color: white !important;
+}
+.btn-outline-primary {
+    color: white !important;
+    border-color: #007bff;
 }
 .card-body {
-  height: 22.3vh;
+  height: 23vh;
   padding: 0.4rem !important;
 }
 .card {
@@ -53,18 +71,21 @@
   /* background-clip: border-box; */
   border: 1px solid rgb(21 123 255);
 }
+.card:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+ }
 #main {
-  padding-top: 5px;
-  margin-left: 0.01px;
-  width: 100%;
-  background-color: #402621;
+    padding-top: 5px;
+    margin-left: 0.01px;
+    width: 100%;
+    background-color: #093521;
 }
 
 h6 {
   font-size: 0.8rem;
   margin-top: 0.5rem;
   padding-left: 0.5rem;
-  color: #296eff;
+  color: white;
 }
 
 hr {
@@ -114,7 +135,7 @@ hr {
     justify-content: space-around;
 }
 .dc-chart select {
-    width: 190px;
+    width: 125px !important;
     display: block;
     /* width: 100%;*/
     height: calc(1.5em + .75rem + 2px);
@@ -134,4 +155,7 @@ option {
     background: #402621;
     color: #f5deb3;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+#datadowmload {
+   
 }

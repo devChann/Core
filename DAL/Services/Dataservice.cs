@@ -22,40 +22,6 @@ namespace DAL.Services
             {
                 var farmers = _context.Transactions.ToList();
                 var farmActivities = _context.Txns.ToList();
-                //var sa = (from x in farmers
-                //          join xa in farmActivities on x.Id equals xa.TransactionId
-                //          group new { x.Name, x.Phone,x.Gender,x.AgeGroup,
-                //              xa.Category, xa.Produce,xa.Quantity,xa.Revenue,xa.Breed,xa.BreedGender,
-                //              xa.AmtofMilkdp,xa.Age,
-                //              } by new { x.Geometry } into grp
-                //          select new { geom=grp.Key,txns=grp.ToList() }).ToList();
-
-
-                //foreach(var i in sa)
-                // {
-                //     double X = i.geom.Geometry.Coordinate.X;
-                //     double Y = i.geom.Geometry.Coordinate.Y;
-                //     var point = new Point(new Position(Y, X));
-                //     var viewModel = new ViewModel();
-                //     foreach(var xa in i.txns)
-                //     {
-                //         viewModel.Name = xa.Name;
-                //         viewModel.Phone = xa.Phone;
-                //         viewModel.AgeGroup = xa.AgeGroup;
-                //         viewModel.Category = xa.Category;
-                //         viewModel.Produce = xa.Produce;
-                //         viewModel.Quantity = xa.Quantity;
-                //         viewModel.Revenue = xa.Revenue;
-                //         viewModel.Breed = xa.Breed;
-                //         viewModel.BreedGender = xa.BreedGender;
-                //         viewModel.AmtofMilkdp = xa.AmtofMilkdp;
-                //         viewModel.AmtofMilkdp = xa.AmtofMilkdp;
-
-                //     }   
-                //     var feature = new GeoJSON.Net.Feature.Feature(point, viewModel);
-                //     geojsonndata.Features.Add(feature);
-
-                //}
                 var query = farmers.GroupJoin(farmActivities,
                     fp => fp.Id,
                     fa => fa.TransactionsId,
@@ -68,6 +34,10 @@ namespace DAL.Services
                     fp.SubCounty,
                     fp.Ward,
                     fp.Vcgroup,
+                    fp.C302,
+                    fp.C11501,
+                    fp.C11301,
+                    
                     fp.Geometry,
                     results)).ToList();
 
@@ -83,6 +53,11 @@ namespace DAL.Services
                         Vcgroup = sa.Vcgroup,
                         Ward=sa.Ward,
                         SubCounty = sa.SubCounty,
+                        C302 = sa.C302,
+                        C11501 = sa.C11501,
+                        C11301 = sa.C11301,
+                        Long = sa.Geometry.Coordinate.X,
+                        Lat = sa.Geometry.Coordinate.Y,
                         Txns = sa.Results.ToList()
                     };
                     double X = sa.Geometry.Coordinate.X;

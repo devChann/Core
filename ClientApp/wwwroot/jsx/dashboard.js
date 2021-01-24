@@ -11,8 +11,8 @@ function init() {
 
   d3.json("Home/getFarmersProfile").then((data) => {
     //spinner.stop();
-      console.log(data);
-    element.remove();
+    console.log(data);
+    element.hide();
 
     drawMarkers(data);
   });
@@ -23,7 +23,7 @@ init();
 function drawMarkers(d) {
   var data = JSON.parse(d);
 
- // console.log(data);
+  //console.log(data);
   var trans = data.features.map((sa) => {
     return sa.properties.Txns;
   });
@@ -40,29 +40,31 @@ function drawMarkers(d) {
     pos[d.TransactionsId] = points;
       dataP.push({
           Id: d.Id,
-         
           Name: attributes.Name, AgeGroup: attributes.AgeGroup,
           Phone: attributes.Phone,
-          "Projects" : attributes.Vcgroup,
-
-      "IDNO": attributes.SubCounty,
-      Ward: attributes.Ward,
+          "Projects": attributes.Vcgroup,
+          "IDNO": attributes.SubCounty,
+          Ward: attributes.Ward,
+          "CIG": attributes.C302,
+          "Sub_Counties": attributes.C11501,
+          "POS": attributes.C11301,
           Category: d.Category,
-      AmtofMilkdp: d.AmtofMilkdp,
+          //AmtofMilkdp: d.AmtofMilkdp,
           Breed: d.Breed, Age: d.Age,
-      BreedGender: d.BreedGender,
-     
-     
-      Produce: d.Produce,
-      Quantity: d.Quantity,
-          Revenue: d.Revenue,
-          UpdateTime: d.UpdateTime,
-      TransactionsId: d.TransactionsId,
+          BreedGender: d.BreedGender,
+          Produce: d.Produce,
+          Quantity: d.Quantity,
+          //Revenue: d.Revenue,
+          "Date": d.UpdateTime,
+          TransactionsId: d.TransactionsId,
+          "Long": attributes.Long,
+          "Lat": attributes.Lat
       
     });
   });
-
-  const xf = crossfilter(dataP);
+    //console.log(dataP)
+    const xf = crossfilter(dataP);
+    const all = xf.groupAll();
   //console.log(dataP);
   //console.log(dataP);
   var groupname = "marker-select";
@@ -72,11 +74,7 @@ function drawMarkers(d) {
     // wil not filter the map
   var farmersDimGrp = farmersDim.group().reduce(
     (p, v) => {
-      ++p.count;
-      p.Name = v.Name;
-      p.Phone = v.Phone;
-      p.Ward = v.Ward;
-
+          ++p.count;
       return p;
     },
     (p, v) => {
@@ -96,19 +94,18 @@ function drawMarkers(d) {
         .markerChart(".map", groupname)
         .dimension(farmers)
         .group(farmersGroup)
-        //.width(600)
-        //.height(400)
+       
         .center([-1.17315747054207, 36.7634069650127])
-        .zoom(7)
+        .zoom(10)
         .cluster(true)
         .locationAccessor(function (d) {
             var tempcoordinates = pos[d.key];
-            //console.log(tempcoordinates);
+           
             return tempcoordinates.reverse();
         })
         .popup((d) => {
             var result = dataP.filter((obj) => obj.TransactionsId === d.key)[0];
-            //console.log(result);
+           //console.log(result)
             popupContent = "";
             popupContent +=
                 '<ul style="list-style-type:none;padding-inline-start: 5px !important;>' +
@@ -129,9 +126,12 @@ function drawMarkers(d) {
                 "</span></span></l> " +
                 "</ul>";
             popupContent = '<div class="map-popup">' + popupContent + "</div>";
-            //console.log(popupContent);
+           
             return popupContent;
         });
+
+    
+    
 
   var types = xf.dimension((d) => d.Breed);
 
@@ -141,8 +141,8 @@ function drawMarkers(d) {
     .pieChart(".pie", groupname)
     .dimension(types)
     .group(typesGroup)
-    .width(125)
-    .height(125)
+    .width(150)
+    .height(150)
     .renderLabel(true)
     .renderTitle(true)
     .radius(80)
@@ -162,18 +162,21 @@ function drawMarkers(d) {
   const farmProduceDim = xf.dimension((d) => d.Produce);
   const farmProduceDimGrp = farmProduceDim
     .group()
-    .reduceSum((d) => d.Quantity);
+    .reduceSum(d => Math.floor(d.Quantity / 1000));
 
   const rowChartAgriactivities = dc
     .rowChart(".rowChart",groupname)
     .dimension(farmProduceDim)
     .group(farmProduceDimGrp)
-    .height(500)
-    .width(250)
+    .height(450)
+    .width(270)
     .elasticX(true)
     .transitionDuration(1500)
-    .xAxis()
-    .ticks(5);
+    .cap(18)
+    //.xAxis()
+    
+    //.ticks(5);
+    rowChartAgriactivities.xAxis().ticks(5);
 
   const farmer = xf.dimension((d) => d.TransactionsId);
 
@@ -183,33 +186,35 @@ function drawMarkers(d) {
     .group((d) => {
       return "";
     })
-    .size(10)
+    .size(5)
     .columns(["Category", "Produce", "Quantity"])
     .order(d3.ascending)
     .on("renderlet", function (table) {
       table.selectAll(".dc-table-group").classed("info", true);
     });
 
-  const revenueDim = xf.dimension((d) => d.Category);
-  const revenueDimGrp = revenueDim.group().reduceSum((d) => d.Revenue);
-  const all = xf.groupAll();
-  const revenuePie = dc
-    .pieChart(".revenuePie", groupname)
-    .dimension(revenueDim)
-    .group(revenueDimGrp)
-    
-    .height(110)
-    .transitionDuration(1500)
-    .renderLabel(true)
-    .renderTitle(true)
-    .ordering(function (p) {
-      return -p.value;
-    });
+  
 
+ 
   const nasdaqCount = dc
     .dataCount(".dc-data-count",groupname)
     .crossfilter(xf)
-    .group(all);
+        .group(all);
+    const totalnumberoffarmers = farmers.group();
+    //var allfarms = totalnumberoffarmers.groupAll();
+
+    const totalfarmers = dc.numberDisplay('.numbers', groupname)
+        .group({
+            value: function () {
+
+                return totalnumberoffarmers.all().filter(function (kv) { return kv.value > 0 }).length;
+            }
+        })
+        .formatNumber(d3.format(".3s"))
+        .valueAccessor(function (d) {
+           // console(d.length)
+            return d
+        })
 
     const QtyDim = xf.dimension((d) => d.Projects);
     const QtyDimGrp = QtyDim.group().reduceCount();
@@ -217,8 +222,8 @@ function drawMarkers(d) {
         .pieChart(".qtyChart", groupname)
         .dimension(QtyDim)
         .group(QtyDimGrp)
-        .width(125)
-        .height(125)
+        .width(150)
+        .height(150)
         .renderLabel(true)
         .renderTitle(true)
         .radius(80)
@@ -230,21 +235,33 @@ function drawMarkers(d) {
   const revrowChart = dc
     .rowChart(".revrowChart",groupname)
     
-    .height(130)
+      .height(165)
+      .width(250)
     .x(d3.scaleLinear().domain([6, 20]))
     .elasticX(true)
     .dimension(revDimension)
     .group(revDimensionGrp)
     .xAxis()
-    .ticks(5);
+    .ticks(3);
 
 
-    var cigsDim = xf.dimension(d=>d.Category)
+    var cigsDim = xf.dimension(d=>d.CIG)
     var cigsSelect = dc.selectMenu('#cigs', groupname)
         .dimension(cigsDim)
         .group(cigsDim.group())
         .controlsUseVisibility(true);
 
+    var subCountiesDim = xf.dimension(d => d.Sub_Counties)
+    var subCounties = dc.selectMenu('#subcounties', groupname)
+        .dimension(subCountiesDim)
+        .group(subCountiesDim.group())
+        .controlsUseVisibility(true);
+
+    var POSCountiesDim = xf.dimension(d => d.POS)
+    var POSCounties= dc.selectMenu('#pos', groupname)
+        .dimension(POSCountiesDim)
+        .group(POSCountiesDim.group())
+        .controlsUseVisibility(true);
 
     d3.select('#download')
         .on('click', function () {
@@ -269,9 +286,6 @@ function drawMarkers(d) {
   return {
       choro: choro,
     pie: pie,
-    //rowChartAgriactivities: rowChartAgriactivities,
-    //revrowChart: revrowChart,
-    //qtyChart: qtyChart,
-    //revenuePie: revenuePie,
+   
   };
 }

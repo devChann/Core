@@ -37,129 +37,119 @@
 </header>
 <hr>
 <div id="main" class="row">
-    
-    <div class="col-4" style="padding-right: 0.7rem !important;padding-left: 7px !important;">
+
+    <div class="col-2" style="margin-left:0.7rem">
         <div class="row">
-            <div class="col-6" style="padding-left:5px !important;padding-right:5px;margin-left:5px;">
-                <div class="card" style="width: auto; height: 17vh;">
-                    <h6>CIGs</h6>
-                    <hr>
-                    <div class="card-body">
-                        <div id="cigs">
-                            @*<div>
-                                <a class='reset'
-                                   href='javascript:cigsSelect.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset</a>
-                            </div>*@
-                        </div>
-
+            <div class="card" style="width: 100%; margin-bottom: 0.5rem;">
+                <h6>Breed | Variety</h6>
+                <hr>
+                <div class="card-body">
+                    <div class="pie">
                     </div>
-                </div>
-                <div class="card" style="width: auto; height: 67.7vh; margin-top: 2px;">
-                    <h6>Data Summary</h6>
-                    <hr>
-                    <div class="card-body">
 
-                        <div class="table table-hover dc-data-table dc-chart" style="overflow:hidden">
-
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="col-6" style="max-width: 48.5% !important;">
-                <div class="row">
-                    <div class="card" style="width: 14.9rem; margin-bottom: 0.5rem;">
-                        <h6>Breed | Variety</h6>
-                        <hr>
-                        <div class="card-body">
-                            <div class="pie">
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="card" style="width: 14.9rem; margin-bottom: 0.21rem;">
-                        <h6>Volumes( Counts | Kgs * 1000)</h6>
-                        <hr>
-                        <div class="card-body">
-                            <div class="revrowChart"></div>
-
-                        </div>
-                    </div>
+        </div>
+        <div class="row">
+            <div class="card" style="width: 100%; margin-bottom: 0.5rem;height:12.3rem;">
+                <h6>Volumes( Counts | Tones)</h6>
+                <hr>
+                <div class="card-body">
+                    <div class="revrowChart"></div>
 
                 </div>
-                <div class="row">
-                    <div class="card" style="width: 14.9rem;">
-                        <h6>Projects</h6>
-                        <hr>
-                        <div class="card-body">
-                            <div class="qtyChart"></div>
-                        </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card" style="width: 100%; margin-bottom: 0.5rem;">
+
+                <h6>Projects</h6>
+                <hr>
+                <div class="card-body">
+                    <div class="qtyChart"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-8" style="max-width:64%;margin-left:0.4rem">
+        <div class="row">
+            <div class="card" style="width: 100%;height: 73.5vh">
+                <span style="float:right !important;text-align:left"> Map view </span>
+              
+                <hr>
+                <div class="card-body">
+                    <div class="map">
+                        <div id="spinx" class="lv-dots lv-mid lg" data-label="Loading Data Please Wait..."></div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row" style="margin-top:0.5rem">
+            <div class="card" style="width: 37rem; margin-bottom: 0.21rem; height:5rem;">
+                <h6> Producer Organizations(POS) | Common Interest Groups(CIGS)</h6>
+                <hr>
+                <div class="card-body">
+                    <div style="display:flex !important">
+                        <label style="padding-top: 0.1rem;padding-right:10px">Sub County: </label>
+                        <div id="subcounties" style="padding-right: 10px">
+                        </div>
+                        <label style="padding-right:3px;padding-top: 0.1rem;">POS:</label>
+                        <div id="pos">
+                        </div>
+                        <label style="padding-left: 0.5rem;padding-top: 0.1rem;padding-right:2px">CIGS: </label>
+                        <div id="cigs">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="width: 23.5rem;height: 5rem;margin-left: 0.2rem;">
+                <h6>Download Data</h6>
+                <hr>
+                <div class="card-body">
+                    <div id="download-type" style="display: flex !important; padding-top: 1px; align-items: center; justify-content: space-around;">
+                        <div><label><input type=radio name="operation" value="raw" checked="true">&nbsp;All data</label></div>
+                        <div><label><input type=radio name="operation" value="table">&nbsp;Table data</label></div>
+                        <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" id="download">Download</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-2" style="padding-left: 5px !important; padding-right:5px;">
-        <div class="card" style="width: auto;height: 85vh;">
-            <h6>Farm Products ( Counts| Qty in Kg)</h6>
+    <div class="col-2" style="padding-right:5px;padding-left: 6px !important;">
+        <div class="card" style="width: 15.7rem; height: 5.9rem;">
+            <h6>Total Farmers</h6>
+            <hr>
+            <div class="card-body">
+                <div class="numbers">
+
+                </div>
+                @*<div id="spinx" class="lv-bars lv-mid lg" data-label="Loading..."></div>*@
+
+
+            </div>
+        </div>
+        <div class="card" style="width: 15.7rem; height: 72vh; margin-top: 2px;">
+            <h6>VC(Counts | Qty in Kg * 1000)</h6>
             <hr>
             <div class="card-body">
                 <div class="rowChart">
-                    @* <div class="reset" style="visibility: hidden;">
-                range: <span class="filter"></span>
-                <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
-            </div> *@
+
                 </div>
-                <div id="spinx" class="lv-bars lv-mid lg" data-label="Loading..."></div>
-                @* <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset</a> *@
+               
             </div>
         </div>
     </div>
 
-    <div class="col-6">
-        <div class="row">
-            <div class="card" style="width: 42.2rem;height: 68.5vh">
-                <h6>Map View</h6>
-                <hr>
-                <div class="card-body">
-                    <div class="map"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="padding-top: 0.1rem;">
-            <div class="card" style="width: 22rem;height: 16.5vh">
-                <div class="card-body">
-                    <h6>Total Records</h6>
-                    <hr>
-                    <div class='dc-data-count'>
-                        <span class='filter-count'></span>
-                        Selected out of <span class='total-count'></span> Records
-                    </div>
 
-                </div>
-            </div>
-            <div class="card" style="width: 20rem;height: 16.5vh;margin-left:0.2rem;margin-bottom:0.28rem;">
-                <div class="card-body">
-                    <h6>Download Data</h6>
-                    <hr>
-                    <div id="download-type" style="display: flex !important; padding-top: 15px; align-items: center; justify-content: space-around;">
-                        <div><label><input type=radio name="operation" value="raw" checked="true">&nbsp;All data</label></div>
-                        <div><label><input type=radio name="operation" value="table">&nbsp;table data</label></div>
-                        <div<button class="btn btn-sm btn-outline-primary my-2 my-sm-0" id="download">Download</button></div>
-                        @*<button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit">LogOut</button>*@
-                    </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    
 </div>
 <hr />
-<footer style="background-color: #402621">
+<footer style="background-color: #002112">
     <div class="container" style="text-align: center; color: wheat; height: 40px; padding-top: 2px;font-size:0.85rem;">
         <span class="text-footer"> &copy;2020 | County Goverment of Kiambu All Rights Reserved. </span>
     </div>
