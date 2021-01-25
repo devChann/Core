@@ -13,7 +13,7 @@ namespace DAL.Services
         public string Ward { get; set; }
         public string Cig { get; set; }
         public string Name { get; set; }
-        public double? Phone { get; set; }
+        public string Phone { get; set; }
         public string Gender { get; set; }
         public string AgeGroup { get; set; }
         public string ValueChain { get; set; }
@@ -21,7 +21,7 @@ namespace DAL.Services
         public string Category { get; set; }
         public string Qty { get; set; }
         public string Production { get; set; }
-        public string Acreage { get; set; }
+        public double Acreage { get; set; }
         public string Variety { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
