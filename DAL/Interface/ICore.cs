@@ -4,7 +4,7 @@ namespace DAL.Interface
 {
     public interface ICore
     {
-        public  Task<string> GetAllFarmersProfiles();
+        public  string GetAllFarmersProfiles();
        
 
     }

@@ -36,9 +36,9 @@ namespace ClientApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         [HttpGet]
-        public async Task<ActionResult> getFarmersProfile()
+        public ActionResult getFarmersProfile()
         {
-            var results = await _coreLogic.getAllFarmersData();
+            var results = _coreLogic.getAllFarmersData();
             return Json(results);
         }
 

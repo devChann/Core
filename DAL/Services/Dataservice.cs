@@ -10,7 +10,7 @@ namespace DAL.Services
 {
     public class Dataservice : ICore
     {
-        public async Task<string> GetAllFarmersProfiles()
+        public string GetAllFarmersProfiles()
         {
 
             var geojsonndata = new FeatureCollection()
@@ -20,7 +20,7 @@ namespace DAL.Services
 
             using (var _context = new NARIGPCoreContext())
             {
-                var farmers =  _context.Transactions.ToList();
+                var farmers = _context.Transactions.ToList();
 
                 farmers.ForEach(sa =>
                 {
@@ -32,7 +32,7 @@ namespace DAL.Services
                         Phone = sa.Phone,
                         Gender = sa.Gender,
                         Ward = sa.Ward,
-                        Cig= sa.Cig,
+                        Cig = sa.Cig,
                         ValueChain = sa.ValueChain,
                         Iw = sa.Iw,
                         Category = sa.Category,
@@ -42,15 +42,15 @@ namespace DAL.Services
                         Variety = sa.Variety,
                     };
 
-                    double X = sa.Lat;
-                    double Y = sa.Long;
+                    double X = double.Parse(sa.x);
+                    double Y = double.Parse(sa.y);
                     var point = new Point(new Position(Y, X));
                     var feature = new GeoJSON.Net.Feature.Feature(point, transModel);
                     geojsonndata.Features.Add(feature);
                 });
             }
             var actualJson = JsonConvert.SerializeObject(geojsonndata);
-            return  actualJson;
+            return actualJson;
 
         }
     }

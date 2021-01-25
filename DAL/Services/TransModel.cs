@@ -23,7 +23,7 @@ namespace DAL.Services
         public string Production { get; set; }
         public double Acreage { get; set; }
         public string Variety { get; set; }
-        public double Lat { get; set; }
-        public double Long { get; set; }
+        public string x { get; set; }
+        public string y { get; set; }
     }
 }

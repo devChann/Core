@@ -8,16 +8,16 @@ namespace Infratrastructure.CoreLogic
     {
 
         private ICore _icore = new DAL.Services.Dataservice(); // instantiate the interface 
-        public async Task<string> getAllFarmersData()
+        public string getAllFarmersData()
         {
-            var results = await _icore.GetAllFarmersProfiles();
+            var results = _icore.GetAllFarmersProfiles();
             return results;
         }
         public void DogetAllFarmersData()
         {
             try
             {
-                getAllFarmersData().Wait();
+                getAllFarmersData();
             }
             catch (Exception ex)
             {

@@ -173,7 +173,9 @@ function drawMarkers(d) {
     .width(270)
     .elasticX(true)
     .transitionDuration(1500)
-    .cap(18)
+        .cap(18)
+   
+
     //.xAxis()
     
     //.ticks(5);
