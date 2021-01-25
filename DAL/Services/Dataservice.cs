@@ -20,28 +20,9 @@ namespace DAL.Services
 
             using (var _context = new NARIGPCoreContext())
             {
-                var farmers = _context.Transactions.ToList();
-                var farmActivities = _context.Txns.ToList();
-                var query = farmers.GroupJoin(farmActivities,
-                    fp => fp.Id,
-                    fa => fa.TransactionsId,
-                    (fp, results) => new TransactionViewModel(
-                    fp.Id ,   
-                    fp.Name,
-                    fp.Phone,
-                    fp.Gender,
-                    fp.AgeGroup,
-                    fp.SubCounty,
-                    fp.Ward,
-                    fp.Vcgroup,
-                    fp.C302,
-                    fp.C11501,
-                    fp.C11301,
-                    
-                    fp.Geometry,
-                    results)).ToList();
+                var farmers =  _context.Transactions.ToList();
 
-                query.ForEach(sa =>
+                farmers.ForEach(sa =>
                 {
                     var transModel = new TransModel()
                     {
@@ -50,18 +31,19 @@ namespace DAL.Services
                         AgeGroup = sa.AgeGroup,
                         Phone = sa.Phone,
                         Gender = sa.Gender,
-                        Vcgroup = sa.Vcgroup,
-                        Ward=sa.Ward,
-                        SubCounty = sa.SubCounty,
-                        C302 = sa.C302,
-                        C11501 = sa.C11501,
-                        C11301 = sa.C11301,
-                        Long = sa.Geometry.Coordinate.X,
-                        Lat = sa.Geometry.Coordinate.Y,
-                        Txns = sa.Results.ToList()
+                        Ward = sa.Ward,
+                        Cig= sa.Cig,
+                        ValueChain = sa.ValueChain,
+                        Iw = sa.Iw,
+                        Category = sa.Category,
+                        Qty = sa.Qty,
+                        Production = sa.Production,
+                        Acreage = sa.Acreage,
+                        Variety = sa.Variety,
                     };
-                    double X = sa.Geometry.Coordinate.X;
-                    double Y = sa.Geometry.Coordinate.Y;
+
+                    double X = sa.Lat;
+                    double Y = sa.Long;
                     var point = new Point(new Position(Y, X));
                     var feature = new GeoJSON.Net.Feature.Feature(point, transModel);
                     geojsonndata.Features.Add(feature);

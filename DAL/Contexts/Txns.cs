@@ -15,9 +15,9 @@ namespace DAL.Contexts
         public string Revenue { get; set; }
         public string AmtofMilkdp { get; set; }
         public string Age { get; set; }
-       // public string TransactionId { get; set; }
-        public string TransactionsId { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Transactions Transactions { get; set; }
+       //// public string TransactionId { get; set; }
+       // public string TransactionsId { get; set; }
+       // [Newtonsoft.Json.JsonIgnore]
+       // public virtual Transactions Transactions { get; set; }
     }
 }

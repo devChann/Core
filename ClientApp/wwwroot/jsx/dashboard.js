@@ -11,7 +11,12 @@ function init() {
 
   d3.json("Home/getFarmersProfile").then((data) => {
     //spinner.stop();
-    console.log(data);
+      //console.log(data);
+      var  farmers_json = JSON.parse(data)
+      var trans = farmers_json.features.map((sa) => {
+          return sa.properties;
+      });
+      console.log(trans)
     element.hide();
 
     drawMarkers(data);
@@ -24,15 +29,16 @@ function drawMarkers(d) {
   var data = JSON.parse(d);
 
   //console.log(data);
-  var trans = data.features.map((sa) => {
-    return sa.properties.Txns;
-  });
+  //var trans = data.features.map((sa) => {
+  //  return sa.prop;
+  //});
     //console.log(trans)
   var data2 = trans.flat();
   // console.log(data2);
   var dataP = [];
   var pos = {};
-  data2.forEach(function (d) {
+    data2.forEach(function (d) {
+
     var geo = data.features.find((f) => f.properties.Id === d.TransactionsId);
     //console.log(geo);
     var points = geo.geometry.coordinates;

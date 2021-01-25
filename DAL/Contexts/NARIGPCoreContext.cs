@@ -44,12 +44,12 @@ namespace DAL.Contexts
             {
                 entity.Property(e => e.Id).HasMaxLength(36);
 
-                entity.Property(e => e.Geometry).HasColumnType("geometry");
+                //entity.Property(e => e.Geometry).HasColumnType("geometry");
             });
 
             modelBuilder.Entity<Txns>(entity =>
             {
-                entity.HasIndex(e => e.TransactionsId);
+                //entity.HasIndex(e => e.TransactionsId);
 
                 //entity.Property(e => e.TransactionId)
                 //    .IsRequired()
@@ -57,9 +57,9 @@ namespace DAL.Contexts
 
                 //entity.Property(e => e.TransactionsId).HasMaxLength(36);
 
-                entity.HasOne(d => d.Transactions)
-                    .WithMany(p => p.Txns)
-                    .HasForeignKey(d => d.TransactionsId);
+                //entity.HasOne(d => d.Transactions)
+                //    .WithMany(p => p.Txns)
+                //    .HasForeignKey(d => d.TransactionsId);
             });
 
             OnModelCreatingPartial(modelBuilder);
