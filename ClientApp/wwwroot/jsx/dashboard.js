@@ -1,16 +1,24 @@
 ﻿//global  variables
 var chartConfig = {
-  target: "spinx",
+    target: "spinx",
+    loader:"loader"
 };
 
-var target = document.getElementById(chartConfig.target);
+function clear_loader() {
+    var loaderdiv = document.getElementById(chartConfig.loader);
+    var target = document.getElementById(chartConfig.target);
+    var element = lv.create(document.getElementById(chartConfig.target));
+    element.hide();
+    loaderdiv.remove();
+}
+
 function init() {
 
   var element = lv.create(document.getElementById(chartConfig.target));
 
   d3.json("Home/getFarmersProfile").then((data) => {
     
-    element.hide();
+   // element.hide();
 
     drawMarkers(data);
   });
@@ -18,7 +26,7 @@ function init() {
 
 init();
 
-// remove null bins
+// remove null bins where we have bins with  zero values.
 
 function remove_empty_bins(source_group) {
     return {
@@ -31,13 +39,17 @@ function remove_empty_bins(source_group) {
 }
 
 function drawMarkers(d) {
+
+    clear_loader(); // clear loader before rendering the charts
+
     var data = JSON.parse(d);
-    
+
+    // create an array of properties from the GeoJson
     var trans = data.features.map((sa) => {
         return sa.properties;
     });
 
-    var pos = {};
+    var pos = {}; // stores the point : id vlaues.
 
     trans.forEach(function (d) {
 
@@ -74,7 +86,7 @@ function drawMarkers(d) {
       
     });
   
-    
+    // create crossfilter instance
     const xf = crossfilter(trans);
     const all = xf.groupAll();
 
