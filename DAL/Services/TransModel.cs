@@ -19,6 +19,9 @@ namespace DAL.Services
         public string ValueChain { get; set; }
         public string Iw { get; set; }
         public string Category { get; set; }
+        public string CCAT { get; set; }
+        public string LCAT { get; set; }
+        public string TotalLivestock { get; set; }
         public string Qty { get; set; }
         public string Production { get; set; }
         public double Acreage { get; set; }

@@ -1,5 +1,4 @@
 ﻿//global  variables
-
 var chartConfig = {
   target: "spinx",
 };
@@ -19,16 +18,27 @@ function init() {
 
 init();
 
+// remove null bins
+
+function remove_empty_bins(source_group) {
+    return {
+        all: function () {
+            return source_group.all().filter(function (d) {
+                return d.value != 0;
+            });
+        }
+    };
+}
+
 function drawMarkers(d) {
-  var data = JSON.parse(d);
+    var data = JSON.parse(d);
+    
+    var trans = data.features.map((sa) => {
+        return sa.properties;
+    });
 
- 
-  var trans = data.features.map((sa) => {
-    return sa.properties;
-  });
+    var pos = {};
 
-  var dataP = [];
-  var pos = {};
     trans.forEach(function (d) {
 
         var geo = data.features.find((f) => f.properties.Id === d.Id);
@@ -68,10 +78,12 @@ function drawMarkers(d) {
     const xf = crossfilter(trans);
     const all = xf.groupAll();
 
-  var groupname = "marker-select";
-  var farmersDim = xf.dimension(function (d) {
-    return d.Id;
-  });
+    var groupname = "marker-select";
+
+      var farmersDim = xf.dimension(function (d) {
+        return d.Id;
+      });
+
     // will not filter the map: used for test
   var farmersDimGrp = farmersDim.group().reduce(
     (p, v) => {
@@ -124,19 +136,22 @@ function drawMarkers(d) {
                 "Ward :" +
                 '<span class="label" style="color: #000000">' +
                 result.Ward +
-                "</span></span></l> " +
+                "</span></span></li> " +
+                '<li><span class="attribute">' +
+                "IW :" +
+                '<span class="label" style="color: #000000">' +
+                result.Iw +
+                "</span></span></li> " +
                 "</ul>";
             popupContent = '<div class="map-popup">' + popupContent + "</div>";
-           
+            console.log(popupContent)
             return popupContent;
         });
 
-    
-    
 
-  var types = xf.dimension((d) => d.Category);
+    var types = xf.dimension((d) => d.Gender);
+    var typesGroup = types.group().reduceCount(d => d.Id);
 
-  var typesGroup = types.group().reduceSum(d=>d.Qty);
 
   var pie = dc
     .pieChart(".pie", groupname)
@@ -160,26 +175,41 @@ function drawMarkers(d) {
   //   }
   //   return label;
   // });
-    const farmProduceDim = xf.dimension((d) => d.ValueChain);
-  const farmProduceDimGrp = farmProduceDim
-    .group()
-      .reduceSum(d => Math.floor(d.Qty));
-
-  const rowChartAgriactivities = dc
-    .rowChart(".rowChart",groupname)
-    .dimension(farmProduceDim)
-    .group(farmProduceDimGrp)
-    .height(250)
-    .width(270)
-    .elasticX(true)
-    .transitionDuration(1500)
-        .cap(18)
-   
-
-    //.xAxis()
+    const farmProduceDim = xf.dimension((d) => d.CCAT);
+    const farmProduceDimGrp = farmProduceDim.group().reduceSum(d =>Math.floor(d.Production/10000));
     
-    //.ticks(5);
+    const nonEmptyProduceGroup = remove_empty_bins(farmProduceDimGrp)
+    const rowChartAgriactivities = dc
+        .rowChart(".rowChart", groupname)
+        .dimension(farmProduceDim)
+        .group(nonEmptyProduceGroup)
+        .height(180)
+        .width(250)
+        .elasticX(true)
+        .transitionDuration(1500)
+        .cap(18)
+
     rowChartAgriactivities.xAxis().ticks(5);
+
+
+    const livestock_categoryDim = xf.dimension((d) => d.LCAT)
+    const livestock_categoryGroup = livestock_categoryDim.group().reduceSum((d) =>
+        d.TotalLivestock);
+    const nonEmptyGrp = remove_empty_bins(livestock_categoryGroup);
+
+    const rowChart_livestock_category = dc
+        .rowChart(".rowChart-livestock-category", groupname)
+        .dimension(livestock_categoryDim)
+        .group(nonEmptyGrp)
+       
+        .height(200)
+        .width(250)
+        .elasticX(true)
+        .transitionDuration(1500)
+        .cap(18)
+
+        rowChart_livestock_category.xAxis().ticks(5);
+
 
   const farmer = xf.dimension((d) => d.Id);
 
@@ -235,8 +265,9 @@ function drawMarkers(d) {
             return -p.value;
         });
 
-   const revDimension = xf.dimension((d) => d.Category);
+    const revDimension = xf.dimension((d) => d.CCAT);
     const revDimensionGrp = revDimension.group().reduceSum(d => d.Acreage);
+    const nonEmptyrevDimensionGrp = remove_empty_bins(revDimensionGrp);
   const revrowChart = dc
     .rowChart(".revrowChart",groupname)
     
@@ -245,7 +276,7 @@ function drawMarkers(d) {
     .x(d3.scaleLinear().domain([6, 20]))
     .elasticX(true)
     .dimension(revDimension)
-    .group(revDimensionGrp)
+    .group(nonEmptyrevDimensionGrp)
     .xAxis()
     .ticks(3);
 
@@ -262,11 +293,12 @@ function drawMarkers(d) {
         .group(subCountiesDim.group())
         .controlsUseVisibility(true);
 
-    var POSCountiesDim = xf.dimension(d => d.Ward)
-    var POSCounties= dc.selectMenu('#pos', groupname)
-        .dimension(POSCountiesDim)
-        .group(POSCountiesDim.group())
-        .controlsUseVisibility(true);
+        var InvestmentWindowDim = xf.dimension(d => d.Iw)
+        const InvestmentWindow = InvestmentWindowDim.group();
+        var POSCounties= dc.selectMenu('#pos', groupname)
+            .dimension(InvestmentWindowDim)
+            .group(InvestmentWindow)
+            .controlsUseVisibility(true);
 
     d3.select('#download')
         .on('click', function () {
