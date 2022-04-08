@@ -1,6 +1,5 @@
 # One million-farmer platform 
-One million farmer  paltfrom is web based data analytics platfrom for analyzing farmers data. this web based application generates
-valuable insights that are used to  improve farn productivity  and profitability  among small scales farmers in Kiambu County, Kenya.
+One million farmer platform is web-based data analytics platform for analysing farmers data. this web-based application generates valuable insights that are used to improve farm productivity and profitability among small scales farmers in Kiambu County, Kenya.
 
 # Application user authentication interface.
 ![dashboard](https://user-images.githubusercontent.com/34920304/103478083-6a328280-4dd5-11eb-9984-0f5677f07683.JPG)
